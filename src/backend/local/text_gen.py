@@ -66,14 +66,11 @@ class TextGenService(TextGenerationInterface):
 
         :return generator generator: The service generated output
         """
-        system_prompt = "Olen tekoälyavustaja. Vastaan aina mahdollisimman avuliaasti ja ystävällisesti. Pidän vastaukseni ytimekkäinä."
-
+        print(f"Context: {context}")
         messages = [
             {
                 "role": "assistant",
-                "content": system_prompt
-                + "Vastaan käyttäjän kysymykseen käyttäen seuraavaa kontekstia tarpeen mukaan: "
-                + context,
+                "content": context
             },
             {
                 "role": "user",

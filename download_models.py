@@ -78,6 +78,19 @@ def download_folder(repo_url, folder_path, dest_path):
         else None
     )
 
+    required_files_bert = (
+        {
+            "config.json",
+            "pytorch_model.bin"
+            "special_tokens_map.json",
+            "tokenizer.json",
+            "tokenizer_config.json",
+            "vocab.txt"
+        }
+        if repo_url == "TurkuNLP/bert-base-finnish-cased-squad2"
+        else None
+    )
+
     for file in files:
         if file["type"] == "file":
 
@@ -85,6 +98,9 @@ def download_folder(repo_url, folder_path, dest_path):
                 continue
 
             if required_files_sbert and file["path"] not in required_files_sbert:
+                continue
+
+            if required_files_bert and file["path"] not in required_files_bert:
                 continue
 
             file_url = f"https://huggingface.co/{repo_url}/resolve/main/{file['path']}"
@@ -135,6 +151,10 @@ def main():
     dest_path = os.path.join("./models/sbert-cased-finnish-paraphrase", folder_path)
     download_folder(repo_url, folder_path, dest_path)
 
+    repo_url = "TurkuNLP/bert-base-finnish-cased-squad2"
+    folder_path = ""
+    dest_path = os.path.join("./models/bert-base-finnish-cased-squad2", folder_path)
+    download_folder(repo_url, folder_path, dest_path)
 
 if __name__ == "__main__":
     main()

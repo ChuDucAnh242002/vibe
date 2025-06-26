@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 from local.cli import CommandLineService
 from local.ir_service import IrService
 from local.text_gen import TextGenService
-from local.chroma import Chroma
+from local.chroma import ChromaService
 from local.context_manager import ContextManager
 from local.tts import TextToSpeech
 from local.audio import AudioService
@@ -21,6 +21,7 @@ from local.stt import SpeechToTextService
 from local.weather import Weather
 from local.yle import YleNewsApi
 from local.baseform import Baseform
+from local.question import QuestionAnsweringService
 
 
 from pathlib import Path
@@ -78,6 +79,7 @@ class AppManager:
             Srv.WEATHER: None,
             Srv.NEWS: None,
             Srv.BASEFORM: None,
+            Srv.QA: None,
         }
 
         self._setup_env()
@@ -158,6 +160,60 @@ class AppManager:
             self.logger.info("Successfully update input/output device indexes")
         except Exception as e:
             self.logger.error("Failed to update input/output device indexes")
+
+    def retrieve_qa_pair(self, question:str):
+        """
+        Get the QA pair based on user input
+
+        :param str question: Question that is used to retrieve similar question
+        """
+        try:
+            answer = self.services[Srv.RAG].retrieve_similar_qa_pair(question)
+
+            self.services[Srv.CLI].print_text(answer)
+            self.logger.info("Successfully retrieve QA pair")
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve QA pair to ChromaDB: {e}")
+
+    def retrieve_qa(self, question: str):
+        """
+        Get the QA pair based on user input
+
+        :param str question: Question that is used to retrieve similar question
+        """
+
+        try:
+            context = self.services[Srv.RAG].retrieve_similar_entries(question)
+            answer = self.services[Srv.QA].retrieve_answer(question, context)
+
+            self.services[Srv.CLI].print_text(answer)
+            self.logger.info("Successfully retrieve answer from Question Answering model")
+        except Exception as e:
+            self.logger.error(f"Failed to get the answer from Question Answering model")
+
+
+    def read_pdf(self, file_name):
+        """
+        Read the pdf and store to ChromaDB
+        """
+        if(file_name.strip() == "qa"):
+            try:
+                self.services[Srv.RAG].add_qa_pair()
+                self.logger.info("Successfully add QA pair to ChromaDB")
+            except:
+                self.logger.error(f"Failed to add QA pair to ChromaDB: {e}")
+        if("json" in file_name):
+            try:
+                self.services[Srv.RAG].add_json(file_name)
+                self.logger.info("Successfully add json to ChromaDB")
+            except:
+                self.logger.error(f"Failed to add json to ChromaDB: {e}")
+        else:
+            try:
+                self.services[Srv.RAG].save_pdf_to_db(file_name)
+                self.logger.info("Successfully read pdf to ChromaDB")
+            except Exception as e:
+                self.logger.error(f"Failed to read pdf to ChromaDB: {e}")
 
     def exit_and_save(self):
         """
@@ -272,12 +328,12 @@ class AppManager:
             ).strip()
             self.services[Srv.TTS].synthesize(full_text)
 
-            self.services[Srv.CONTEXT_MANAGER].messages.extend(
-                [
-                    {"role": "user", "content": input_text},
-                    {"role": "assistant", "content": full_text},
-                ]
-            )
+            # self.services[Srv.CONTEXT_MANAGER].messages.extend(
+            #     [
+            #         {"role": "user", "content": input_text},
+            #         {"role": "assistant", "content": full_text},
+            #     ]
+            # )
 
         else:
             sentence = ""
@@ -295,12 +351,12 @@ class AppManager:
 
                 self.services[Srv.CLI].print_text(text, None, False)
 
-            self.services[Srv.CONTEXT_MANAGER].messages.extend(
-                [
-                    {"role": "user", "content": input_text},
-                    {"role": "assistant", "content": sentence.strip()},
-                ]
-            )
+            # self.services[Srv.CONTEXT_MANAGER].messages.extend(
+            #     [
+            #         {"role": "user", "content": input_text},
+            #         {"role": "assistant", "content": sentence.strip()},
+            #     ]
+            # )
             self.services[Srv.CLI].print_separator()
 
         self.logger.info("PERF : [text_gen] Done generating text")
@@ -311,25 +367,25 @@ class AppManager:
         This function loads all the services based on the chosen input and output devices
         """
 
-        try:
-            self.services[Srv.AUDIO] = AudioService(self)
-        except Exception as e:
-            self.logger.error(f"Failed to load audio service: {e}")
-            self.exit()
+        # try:
+        #     self.services[Srv.AUDIO] = AudioService(self)
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load audio service: {e}")
+        #     self.exit()
 
-        try:
-            self.services[Srv.STT] = SpeechToTextService(self.root)
-        except Exception as e:
-            self.logger.error(f"Failed to load stt service: {e}")
-            self.exit()
+        # try:
+        #     self.services[Srv.STT] = SpeechToTextService(self.root)
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load stt service: {e}")
+        #     self.exit()
 
-        try:
-            self.services[Srv.TTS] = TextToSpeech(
-                self.root, device_index=self.services[Srv.AUDIO].output_device_index
-            )
-        except Exception as e:
-            self.logger.error(f"Failed to load tts service: {e}")
-            self.exit()
+        # try:
+        #     self.services[Srv.TTS] = TextToSpeech(
+        #         self.root, device_index=self.services[Srv.AUDIO].output_device_index
+        #     )
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load tts service: {e}")
+        #     self.exit()
 
         try:
             self.services[Srv.TEXT_GEN] = TextGenService(self.root)
@@ -338,38 +394,44 @@ class AppManager:
             self.exit()
 
         try:
-            self.services[Srv.RAG] = Chroma(self.root)
+            self.services[Srv.RAG] = ChromaService(self.root)
         except Exception as e:
             self.logger.error(f"Failed to load rag service: {e}")
             self.exit()
 
-        try:
-            self.services[Srv.CONTEXT_MANAGER] = ContextManager(self.root)
-        except Exception as e:
-            self.logger.error(f"Failed to load text context management service: {e}")
-            self.exit()
+        # try:
+        #     self.services[Srv.CONTEXT_MANAGER] = ContextManager(self.root)
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load text context management service: {e}")
+        #     self.exit()
+
+        # try:
+        #     self.services[Srv.IR] = IrService(self)
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load ir service: {e}")
+        #     self.exit()
+
+        # try:
+        #     self.services[Srv.WEATHER] = Weather()
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load weather service: {e}")
+        #     self.exit()
+        # try:
+        #     self.services[Srv.NEWS] = YleNewsApi(self)
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load yle news service: {e}")
+        #     self.exit()
+
+        # try:
+        #     self.services[Srv.BASEFORM] = Baseform()
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load baseform service: {e}")
+        #     self.exit()
 
         try:
-            self.services[Srv.IR] = IrService(self)
+            self.services[Srv.QA] = QuestionAnsweringService(self.root)
         except Exception as e:
-            self.logger.error(f"Failed to load ir service: {e}")
-            self.exit()
-
-        try:
-            self.services[Srv.WEATHER] = Weather()
-        except Exception as e:
-            self.logger.error(f"Failed to load weather service: {e}")
-            self.exit()
-        try:
-            self.services[Srv.NEWS] = YleNewsApi(self)
-        except Exception as e:
-            self.logger.error(f"Failed to load yle news service: {e}")
-            self.exit()
-
-        try:
-            self.services[Srv.BASEFORM] = Baseform()
-        except Exception as e:
-            self.logger.error(f"Failed to load baseform service: {e}")
+            self.logger.error(f"Failed to load question answering service {e}")
             self.exit()
 
     def _setup_env(self):

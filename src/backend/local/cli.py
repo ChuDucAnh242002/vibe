@@ -118,7 +118,10 @@ class CommandLineService:
         3. Only language model service
         4. Only text to speech service
         5. Only intent recognition service
-        6. All services silent mode
+        6. Only QA pair service
+        7. Only Question Answering model
+        8. All services silent mode
+        9. Add document to ChromaDB
         """
         while True:
             # print(f"Testing: {self.testing}")  # Debugging statement
@@ -134,12 +137,15 @@ class CommandLineService:
             print(self.term.ljust("3: Only language model service"))
             print(self.term.ljust("4: Only text to speech service"))
             print(self.term.ljust("5: Only intent recognition service"))
-            print(self.term.ljust("6: All services silent mode"))
+            print(self.term.ljust("6: Only QA pair service"))
+            print(self.term.ljust("7: Only Question Answering model"))
+            print(self.term.ljust("8: All services silent mode"))
+            print(self.term.ljust("9: Add document to ChromaDB"))
             print(self.term.ljust("0: Adjust audio input/output devices"))
 
             command_input = input(
                 self.term.ljust(
-                    "Choose service (from 0 to 5), (q)uit or (s)ave and exit:"
+                    "Choose service (from 0 to 8), (q)uit or (s)ave and exit:"
                 )
             ).strip()
 
@@ -160,7 +166,13 @@ class CommandLineService:
             elif command_input == "5":
                 self._input_ir()
             elif command_input == "6":
+                self._input_qa_pair()
+            elif command_input == "7":
+                self._input_qa()
+            elif command_input == "8":
                 self._toggle_recording(True, silent=True)
+            elif command_input == "9":
+                self._input_pdf()
 
             if self.testing:
                 # If testing is enabled, exit after one iteration
@@ -183,7 +195,7 @@ class CommandLineService:
             while True:
                 key = self.term.inkey(timeout=1)
                 if key.name == "KEY_ESCAPE":
-                    self.app.exit()
+                    # self.app.exit()
                     return
                 elif key.name == "KEY_F12":
                     self._flush_input_buffer()
@@ -233,6 +245,33 @@ class CommandLineService:
         self._input_from_user(
             f"Write something for intent recognition service or '(b)ack': ",
             self.app.intent_recognition,
+        )
+
+    def _input_qa_pair(self):
+        """
+        Query text input from user for QA pair service.
+        """
+        self._input_from_user(
+            f"Write something for the QA pair service or '(b)ack': ",
+            self.app.retrieve_qa_pair
+        )
+
+    def _input_qa(self):
+        """
+        Query text input from user for Question Answering service
+        """
+        self._input_from_user(
+            f"Write something for the Question Answering service or '(b)ack': ",
+            self.app.retrieve_qa
+        )
+
+    def _input_pdf(self):
+        """
+        Query text input from user for reading pdf.
+        """
+        self._input_from_user(
+            f"Write the pdf file name or '(b)ack': ",
+            self.app.read_pdf
         )
 
     def _flush_input_buffer(self):

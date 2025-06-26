@@ -1,0 +1,107 @@
+[
+    {
+        "page_content": "MOOTTORI: 4-syl., 4-tahtinen moottori, sylinterit valetut ryhmään. Läpimitta 105 mm., iskunpituus 127 mm., sylinteritilavuus 4.4 ltr. Sylinterien sytytysjärjestys 1-2-4-3. Puristussuhde matalapainekannella 3.84: 1 (paloöljyllä). Puristussuhde korkeapainekannella 4.56: 1 (bensiinillä). Moottorin teho 1100 kierroksella minuutissa 30 hv. bensiinillä. Teho 1100 kierroksellaminuutissa 26 hv. paloöljyllä. 3 kampilaakeria, läpimitta 50.8 mm., pituus 76.2 mm. Kiertokangenlaakerit: läpimitta 50.8 mm., pituus 57.2 mm. Valurautamännät varustetut 4:llä männänrenkaalla, kaikki männäntapin yläpuolella. Alin ura varustettu öljyrenkaalla. Täysin kuormittamattomat männäntapit joustavine lukkorenkaineen. Venttiilit: kromikiisuterästä. Venttiilien nousuväli on 8 mm",
+        "metadata": {"source": "chapter1.json"},
+        "id": 1
+    }, 
+    {
+        "page_content": "VOITELU: Roiskevoitelujärjestelmä öljysuodattimella. Kampikammioon mahtuu 10 ltr. sekä vaihdelaatikkoon 15 ltr.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 2
+    }, 
+    {
+        "page_content": "POLTTOAINE: Polttoaine valuu kaasuttajaan omalla painollaan. Säiliöön mahtuu 75 ltr. petroolia ja 4.5 ltr. bensiiniä.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 3
+    }, 
+    {
+        "page_content": "KAASUTTAJA: Paloöljykäyttöä varten toimitetaan 'Kingston' kaasuttaja (matalapainekansi). 'Zenith' bensiinikaasuttaja toimitetaan yhdessä korkeapainekannen kanssa.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 4
+    }, 
+    {
+        "page_content": "SÄÄTÄJÄ: Koteloitu keskipakoissäätäjä on asennettu magneeton hammaspyörälle. Voidaan asettaa ohjaajan istuimelta käsin aina 1500 kierrokselle minuutissa.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 5
+    }, 
+    {
+        "page_content": "ILMAPUHDISTAJA: öljyilmanpuhdistaja, tilavuus 2.8 ltr. Käytettävä ilma imeytyy öljyn läpi, joten lika ja pöly poistuu ja sylinterinseinämien kuluminen vähenee.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 6
+    }, 
+    {
+        "page_content": "SYTYTYS: Saksalainen korkeajännite Bosch-magneetto varustettuna nykäisykytkimellä",
+        "metadata": {"source": "chapter1.json"},
+        "id": 7
+    }, 
+    {
+        "page_content": "JÄÄHDYTYS: Termosifoonijärjestelmä ja pumppu. 45 sm:n tuuletinta käyttää aseteltava V-muotoinen hihna. Jäähdytysjärjestelmään mahtuu 45 ltr. vettä.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 8
+    }, 
+    {
+        "page_content": "VOIMANSIIRTO: Kolme nopeutta eteenpäin, yksi taaksepäin. Kaikki akselit pyörivät rullalaakereissa. Voimansiirto taka-akseliin tapahtuu ruuvin ja ruuvipyörän välityksellä. Maanvii jelystraktori toimitetaan joko erikoisvälityksellä (punainen merkki taka-akselin kotelossa) tai vakiovälityksellä (vihreä merkki taka-akselin kotelossa) sekä varustettuna joko tavallisilla eväraudoilla tai piikkiraudoilla takapyörissä.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 9
+    },
+    {
+        "page_content": "KYTKIN: Levykytkin — 17 karaistua levyä, työskentelee öljyssä.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 10
+    },
+    {
+        "page_content": "JARRU: Levyjarru, 12 levyä vaihdelaatikossa, johon vaikuttaa kytkinpoljin.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 11
+    },
+    {
+        "page_content": "TAKA-AKSELI: Puoleksi kuormittamaton. Tasauspyörästön ristissä 4 vaakapyörää vaihdettavilla pronssiholkeilla varustettuna, 4 vankkaa rullalaakeria. Akseli ja hammaspyörät valettu yhdeksi kappaleeksi.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 12
+    },
+    {
+        "page_content": "OHJAUS: Kierukka ja sektori. Välityssuhde 17: 1. Auton ohjauspyörä 46 sm.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 13
+    },
+    {
+        "page_content": "ETU-AKSELI: Puristettu ja karaistu. Tuettu kolmessa pisteessä. Joustava moottorin kiinnitys.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 14
+    },
+    {
+        "page_content": "PYÖRÄT: Etupyörät ovat valurautaa sekä asetetut säädettäville rullalaakereille. Takapyörien puolat ovat uutetut yhteen navan kanssa ja niitatut vanteeseen. Ostajan toivomuksen mukaan varustetaan takapyörät joko kulmaraudoilla (24 kpl.) tai piikkiraudoilla (48 kpl.)",
+        "metadata": {"source": "chapter1.json"},
+        "id": 15
+    },
+    {
+        "page_content": "LOKASUOJAT: Takapyörissä lokasuojat ja astuinlauta vetokoukun päällä.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 16 
+    },
+    {
+        "page_content": "VETOKOUKUN PIDENNYS: Vetokoukkuun asennettu teräslevy pidentää sitä 18 sm:llä.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 17
+    },
+    {
+        "page_content": "HIHNAPYÖRÄ (ei kuulu vakiovarusteisiin): Leveys 165 mm., läpimitta 241 mm. Hihnapyörää käyttää kierukkamainen kartiohammaspyörä. Nopeus sama kuin moottorissa, 1100 kierrosta minuutissa, hihnan nopeus vakiohihnapyörällä on 832 m. minuutissa. Hihnapyörä voidaan toimittaa vapaavaihteella tai ilman (ks. kuvaa 23)",
+        "metadata": {"source": "chapter1.json"},
+        "id": 18
+    },
+    {
+        "page_content": "TYÖKALUT: Kojelaudalle asennettu työkalulaatikko sisältää täydellisen työkaluvalikoiman (ks. kuvaa 29).",
+        "metadata": {"source": "chapter1.json"},
+        "id": 19
+    },
+    {
+        "page_content": "MITTOJA: Akseliväli 1.6 m. Etupyörien halkaisija 710 mm., leveys 125 mm. Takapyörän halkaisija 1065 mm., leveys 228 mm. Traktorin pituus on 2.75 m., leveys 1.6 m. ja korkeus 1.4 m.; pienin etäisyys maasta 0.3. Kääntösäde 3.2 m.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 20
+    },
+    {
+        "page_content": "PAINO: Maanviljelystraktorin paino ilman ajajaa, vettä, öljyä tai muita erikoisvarusteita 1400 kg. Traktorin koko paino, siis täydessä ajokunnossa, vesi, öljy, polttoaine sekä ajaja mukaan laskettuina, on 1650 kg.",
+        "metadata": {"source": "chapter1.json"},
+        "id": 21
+    }
+]

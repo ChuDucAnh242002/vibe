@@ -1,0 +1,52 @@
+[
+  {
+    "page_content": "Mitä pitää tehdä ennen traktorin käynnistämistä?",
+    "metadata": {"source": "question_data.json"},
+    "id": 1
+  },
+  {
+    "page_content": "Millä polttoaineilla traktori toimii?",
+    "metadata": {"source": "question_data.json"},
+    "id": 2
+  },
+  {
+    "page_content": "Kuinka monta vaihdetta traktorissa on?",
+    "metadata": {"source": "question_data.json"},
+    "id": 3
+  },
+  {
+    "page_content": "Mikä on moottorin teho?",
+    "metadata": {"source": "question_data.json"},
+    "id": 4
+  },
+  {
+    "page_content": "Kuinka usein moottoriöljy pitää vaihtaa?",
+    "metadata": {"source": "question_data.json"},
+    "id": 5
+  },
+  {
+    "page_content": "Mikä on sylinterien sytytysjärjestys?",
+    "metadata": {"source": "question_data.json"},
+    "id": 6
+  },
+  {
+    "page_content": "Kuinka jäähdytysjärjestelmä toimii?",
+    "metadata": {"source": "question_data.json"},
+    "id": 7
+  },
+  {
+    "page_content": "Miten toimitaan, jos jäähdytysjärjestelmän vesi on kiehunut pois?",
+    "metadata": {"source": "question_data.json"},
+    "id": 8
+  },
+  {
+    "page_content": "Kuinka monta voitelupistettä traktorissa on?",
+    "metadata": {"source": "question_data.json"},
+    "id": 9
+  },
+  {
+    "page_content": "Milloin ilmanpuhdistajan öljy pitää vaihtaa?",
+    "metadata": {"source": "question_data.json"},
+    "id": 10
+  }
+]

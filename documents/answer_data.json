@@ -1,0 +1,52 @@
+[
+  {
+    "page_content": "Ennen käynnistämistä tarkista, että Jäähdyttimessä on 45 l vettä, Kampikammiossa on 10 l moottoriöljyä, Vaihdelaatikossa ja tasauspyörästössä on 15 l öljyä, Ilmanpuhdistajassa on 2.8 l öljyä, Polttoainetankissa on riittävästi bensiiniä ja paloöljyä",
+    "metadata": {"source": "answer_data.json"},
+    "id": 1
+  },
+  {
+    "page_content": "Traktori käynnistetään bensiiniä käyttäen ja siirrytään paloöljyyn viiden minuutin kuluttua.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 2
+  },
+  {
+    "page_content": "Traktorissa on kolme vaihdetta eteenpäin ja yksi taaksepäin.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 3
+  },
+  {
+    "page_content": "Moottori tuottaa 30 hevosvoimaa bensiinillä ja 26 hevosvoimaa paloöljyllä 1100 kierroksella minuutissa.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 4
+  },
+  {
+    "page_content": "Ensimmäisen kerran 30 ajotunnin jälkeen, sitten 60–75 tunnin välein olosuhteista riippuen.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 5
+  },
+  {
+    "page_content": "Sylinterien sytytysjärjestys on 1–2–4–3.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 6
+  },
+  {
+    "page_content": "Vesi kiertää moottorin sisällä termosifooniperiaatteella ja vesipumpun avulla, jäähdyttäjän tuuletin viilentää sen.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 7
+  },
+  {
+    "page_content": "Jos jäähdyttimestä on haihtunut paljon vettä, älä lisää heti kylmää vettä, sillä moottori saattaa haljeta. Jäähdytä moottori ensin.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 8
+  },
+  {
+    "page_content": "Traktorissa on 17 voitelupistettä, jotka voidellaan voidepuristimella.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 9
+  },
+  {
+    "page_content": "Ilmanpuhdistajan öljy tulee vaihtaa kerran viikossa tai moottoriöljyn vaihdon yhteydessä.",
+    "metadata": {"source": "answer_data.json"},
+    "id": 10
+  }
+]
