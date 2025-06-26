@@ -53,7 +53,7 @@ class TextGenService(TextGenerationInterface):
             model_path=text_generation_path,
             chat_format="gemma",
             verbose=True,
-            n_ctx=2048,
+            n_ctx=4096,
             n_threads=6,
         )
 

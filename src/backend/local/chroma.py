@@ -59,6 +59,14 @@ class ChromaService:
             name=os.getenv("CHAPTER1_COLLECTION_NAME")
         )
 
+        self.collection_tractor = self.chroma_client.get_or_create_collection(
+            name=os.getenv("TRACTOR_COLLECTION_NAME")
+        )
+
+        self.collection_tractor2 = self.chroma_client.get_or_create_collection(
+            name=os.getenv("TRACTOR2_COLLECTION_NAME")
+        )
+
         self.collection_question = self.chroma_client.get_or_create_collection(
             name=os.getenv("QUESTION_COLLECTION_NAME")
         )
@@ -76,6 +84,18 @@ class ChromaService:
         self.vector_store_chapter1 = Chroma(
             client=self.chroma_client,
             collection_name=os.getenv("CHAPTER1_COLLECTION_NAME"),
+            embedding_function=self.embedding_function,
+        )
+
+        self.vector_store_tractor = Chroma(
+            client=self.chroma_client,
+            collection_name=os.getenv("TRACTOR_COLLECTION_NAME"),
+            embedding_function=self.embedding_function,
+        )
+
+        self.vector_store_tractor2 = Chroma(
+            client=self.chroma_client,
+            collection_name=os.getenv("TRACTOR2_COLLECTION_NAME"),
             embedding_function=self.embedding_function,
         )
 
@@ -139,7 +159,7 @@ class ChromaService:
         # data = self.collection.get()
         # print(data)
 
-    def retrieve_similar_entries(self, query, n=2, similarity_threshold=0.65):
+    def retrieve_similar_entries(self, query, n=1, similarity_threshold=0.65):
         """
         Retrieve the most similar entries from the database based on the query.
         The function uses cosine similarity to find the closest match.
@@ -155,7 +175,7 @@ class ChromaService:
         try:
             print("Query: ", query)
 
-            results = self.vector_store_chapter1.similarity_search(
+            results = self.vector_store_tractor2.similarity_search(
                 query=query,
                 k=n,
             )
@@ -164,10 +184,10 @@ class ChromaService:
 
         if len(results) == 0:
             return ""
-        document = results[0]
-        document2 = results[1]
+        
+        page_contents = [results[i].page_content for i in range(0,n)]
 
-        result = document.page_content + " " + document2.page_content 
+        result = " ".join(page_contents)
 
         return result
     
@@ -194,6 +214,8 @@ class ChromaService:
         """
         file_path = self.filePath + file_name
 
+        print(file_path)
+
         with open(file_path, 'r') as file:
             file_data = json.load(file)
 
@@ -206,11 +228,22 @@ class ChromaService:
         ]
 
         uuids = [str(uuid.uuid4()) for _ in range(len(file_documents))]
+        try:
 
-        self.vector_store_chapter1.add_documents(documents=file_documents, ids=uuids)
-
-        data = self.collection_chapter1.get()
-        print(data)
+            if os.getenv("CHAPTER1_COLLECTION_NAME") in file_name:
+                self.vector_store_chapter1.add_documents(documents=file_documents, ids=uuids)
+                data = self.collection_chapter1.get()
+                print(data)
+            elif os.getenv("TRACTOR2_COLLECTION_NAME") in file_name:
+                self.vector_store_tractor2.add_documents(documents=file_documents, ids=uuids)
+                data = self.collection_tractor2.get()
+                print(data)
+            elif os.getenv("TRACTOR_COLLECTION_NAME") in file_name:
+                self.vector_store_tractor.add_documents(documents=file_documents, ids=uuids)
+                data = self.collection_tractor.get()
+                print(data)
+        except Exception as e:
+            print(f"Error adding json to ChromaDB: {e}")
 
     def add_qa_pair(self):
         question_path = self.filePath + "question_data.json"
