@@ -197,9 +197,14 @@ class ChromaService:
         if len(question) == 0 or not question[0].id:
             return ""
         
-        question_id = question[0].id
-        print(question_id)
-        answer_document = self.vector_store_answers.get_by_ids([question_id])
+        question_document = question[0]
+        answer_uuid = question_document.metadata.get('answer_uuid')
+
+        if not answer_uuid:
+            print("No answer_uuid in question metadata.")
+            return ""
+
+        answer_document = self.vector_store_answers.get_by_ids([answer_uuid])
         answer_page_content = answer_document[0].page_content
 
         return answer_page_content
@@ -247,51 +252,41 @@ class ChromaService:
         question_path = self.filePath + "question_data.json"
         answer_path = self.filePath + "answer_data.json"
 
-        print(question_path)
-        print(answer_path)
-
         with open(question_path, 'r') as file:
             question_data = json.load(file)
-            print(question_data)
         with open(answer_path, 'r') as file:
             answer_data = json.load(file)
-            print(answer_data)
 
         try:
-            question_documents = [
-                Document(
-                    page_content=question['page_content'],
-                    metadata=question['metadata'],
-                    id=question['answer_id']
-                ) for question in question_data
-            ]
+            answer_uuid_map = {
+                answer['id']: str(uuid.uuid4()) for answer in answer_data
+            }
+
             answer_documents = [
                 Document(
                     page_content=answer['page_content'],
                     metadata=answer['metadata'],
-                    id=answer['id']
+                    id=answer_uuid_map[answer['id']]
                 ) for answer in answer_data
-            ]
-        except Exception as e:
-            print(f"Create document errors: {e}")
+            ]  
 
-        uuids = [str(uuid.uuid4()) for _ in range(len(answer_documents))]
-        answer_uuids = {
-            answer_data[i]['id']:uuids[i] for i in range(len(answer_documents))
-        } 
-        question_uuids = []
+            question_documents = [
+                Document(
+                    page_content=question['page_content'],
+                    metadata={**question['metadata'], 'answer_uuid': answer_uuid_map[question['answer_id']]},
+                    id=str(uuid.uuid4())
+                ) for question in question_data
+            ]          
+        except Exception as e:
+            print(f"Error creating documents: {e}")
+            return
 
         try:
-            for question in question_data:
-                question_id = question['answer_id']
-                question_uuid = answer_uuids[question_id]
-                question_uuids.append(question_uuid)
+            self.vector_store_questions.add_documents(documents=question_documents)
+            self.vector_store_answers.add_documents(documents=answer_documents)
         except Exception as e:
-            print(f"Create question uuids errors: {e}")
+            print(f"Error adding documents to vector store: {e}")
 
-        self.vector_store_questions.add_documents(documents=question_documents, ids=uuids)
-        self.vector_store_answers.add_documents(documents=answer_documents, ids=uuids)
-        
         data_question = self.collection_answer.get()
         data_answer = self.collection_answer.get()
         print(data_question)
