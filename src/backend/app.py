@@ -198,6 +198,7 @@ class AppManager:
         """
         if(file_name.strip() == "qa"):
             try:
+                print("qasdsadas")
                 self.services[Srv.RAG].add_qa_pair()
                 self.logger.info("Successfully add QA pair to ChromaDB")
             except:

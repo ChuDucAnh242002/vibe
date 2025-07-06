@@ -1,52 +1,772 @@
 [
   {
     "page_content": "Mitä pitää tehdä ennen traktorin käynnistämistä?",
-    "metadata": {"source": "question_data.json"},
-    "id": 1
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä nesteitä ja öljyjä tulee tarkistaa ennen koneen käynnistystä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä asioita tulee tarkistaa ennen moottorin käynnistystä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitkä nesteet ja öljyt tulee tarkastaa ennen traktorin käyttöä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä asioita pitää tarkistaa ennen kuin traktori voidaan käynnistää?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitkä nesteet ja öljyt tulisi olla tarkastettuina ennen traktorin käyttöä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä on varmistettava ennen traktorin käynnistämistä, jotta moottori ja muut osat toimivat oikein?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä tulee tarkastaa ennen traktorin käynnistämistä, jotta kone toimii asianmukaisesti?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitkä ovat tärkeimmät tarkastukset ennen kuin käynnistät traktorin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Millä nesteillä ja öljyillä tulee olla oikeat määrät ennen traktorin käyttöä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä turvallisuustoimenpiteitä tulee noudattaa ennen traktorin käynnistämistä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 1
   },
   {
     "page_content": "Millä polttoaineilla traktori toimii?",
-    "metadata": {"source": "question_data.json"},
-    "id": 2
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Miten traktori käynnistetään ja mitä polttoainetta käytetään alkuun?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mitä polttoainetta traktori käyttää aluksi ja mitä myöhemmin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mikä on traktoreiden käynnistyspolttoaine ja milloin vaihdetaan toiseen polttoaineeseen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mitä polttoainetta traktori käyttää ensimmäiset minuutit ja mitä sen jälkeen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Miten traktori siirtyy eri polttoaineisiin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Kuinka kauan traktori käyttää käynnistyksessä bensiiniä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mitä polttoainetta käytetään ennen paloöljyä traktoreissa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mikä on traktoreiden polttoaineen vaihtoajankohta?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mitä polttoaineita traktori käyttää ja missä järjestyksessä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
+  },
+  {
+    "page_content": "Kuinka kauan traktori käynnistyy bensiinillä ennen paloöljyyn siirtymistä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 2
   },
   {
     "page_content": "Kuinka monta vaihdetta traktorissa on?",
-    "metadata": {"source": "question_data.json"},
-    "id": 3
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Kuinka monta vaihdetta traktorissa on eteenpäin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Montako perusvaihteen vaihtoehtoa traktorista löytyy eteenpäin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Kuinka monta vaihdetta traktorissa on taaksepäin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Montako vaihdetta traktorissa voi valita liikkumiseen eteenpäin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Miten monta vaihdetta traktorin vaihdelaatikossa on eteenpäin suuntaan?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Jos traktori haluaa liikkua eteenpäin, kuinka monta eri vaihdetta on valittavana?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mitä väliä on traktorin vaihteiden lukumäärällä eteen- ja taaksepäin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Traktorin vaihteiden määrä eteenpäin on?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mikä on traktorin vaihteiden lukumäärä suuntaan eteenpäin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
+  },
+  {
+    "page_content": "Montako vaihdetta traktorissa on taakse päin ajamiseen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 3
   },
   {
     "page_content": "Mikä on moottorin teho?",
-    "metadata": {"source": "question_data.json"},
-    "id": 4
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mitä moottori tuottaa bensiinillä ja 1100 kierroksella minuutissa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mikä on moottorin teho bensiinillä ja paloöljyllä 1100 kierroksella minuutissa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Kuinka paljon hevosvoimia moottori tuottaa paloöljyllä 1100 kierroksella minuutissa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mikä on moottorin hevosvoimatuotto bensiinillä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mikä on moottorin teho eri polttoaineilla 1100 rpm?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Monta hevosvoimaa moottori tuottaa bensiinillä ja paloöljyllä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Kuinka paljon tehoa moottori tuottaa eri polttoaineilla ja 1100 rpm?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mitä ovat moottorin suoritusarvot bensiinillä ja paloöljyllä tietyllä kierrosluvulla?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Kerro moottorin teho bensiinillä ja paloöljyllä, kun kierrosluku on 1100?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mitkä ovat moottorin hevosvoimat bensiinillä ja paloöljyllä kyseisellä kierrosluvulla?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 4
   },
   {
     "page_content": "Kuinka usein moottoriöljy pitää vaihtaa?",
-    "metadata": {"source": "question_data.json"},
-    "id": 5
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Kuinka usein veneen moottoriöljy tulisi vaihtaa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Milloin minun pitäisi vaihtaa uuden moottorini öljy ensimmäisen kerran?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Mikä on suositeltu öljynvaihtoväli perämoottorille?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Kuinka usein dieselmoottorin öljy tulisi vaihtaa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten usein moottoriöljy kannattaa tarkistaa ja vaihtaa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Milloin uuden perämoottorin öljyt vaihdetaan ensikerran?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Mikä on suositeltu öljynvaihtoväli moottoripyörän moottorille?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Onko väliä, kuinka usein vaihdan moottoriöljyn, kun käytän venettäni makeassa tai suolaisessa vedessä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Mikä on normaali öljynvaihtoväli, kun uuden moottorin sisäänajo on suoritettu?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten ilmoitan moottoriöljyn vaihdon tarpeen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 5
   },
   {
     "page_content": "Mikä on sylinterien sytytysjärjestys?",
-    "metadata": {"source": "question_data.json"},
-    "id": 6
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mikä on moottorin sylinterien sytytysjärjestys?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Missä järjestyksessä sylinterit syttyvät?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mikä on 4-sylinterisen moottorin sytytysjärjestys?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Miten sylinterit syttyvät tässä moottorissa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Kerro minulle sylinterien sytytysjärjestys.",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mikä on sytytysjärjestys sylintereille?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä järjestystä sylinterit käyttävät syttyäkseen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mikä on sylinterien sytytysjärjestys tässä moottorissa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Minkä järjestyksen sylinterit noudattavat syttyessään?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
+  },
+  {
+    "page_content": "Voitko kertoa moottorin sytytysjärjestyksen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 6
   },
   {
     "page_content": "Kuinka jäähdytysjärjestelmä toimii?",
-    "metadata": {"source": "question_data.json"},
-    "id": 7
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Kuinka moottorin jäähdytys tapahtuu?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mikä on jäähdytysjärjestelmän perustoimintaperiaate?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Miten moottorin lämpöä hallitaan?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mitä komponentteja moottorin jäähdytysjärjestelmässä on?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Miten vesi kiertää moottorissa jäähdytystarkoituksessa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mikä auttaa jäähdyttämään jäähdytysnestettä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Millä tavoin moottorin lämpöä siirretään pois?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Miten jäähdytysneste kiertää moottorissa ja kuinka sitä jäähdytetään?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Selitä moottorin jäähdytysprosessin vaiheet.",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
+  },
+  {
+    "page_content": "Miten moottorin lämpötilaa säädellään?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 7
   },
   {
     "page_content": "Miten toimitaan, jos jäähdytysjärjestelmän vesi on kiehunut pois?",
-    "metadata": {"source": "question_data.json"},
-    "id": 8
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mitä teen, jos jäähdytysnesteen määrä on laskenut huomattavasti?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Onko ok lisätä kylmää vettä suoraan kuumaan moottoriin, jos jäähdytin on tyhjä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Miten toimia, jos huomaan jäähdytysjärjestelmästä haihtuneen paljon vettä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mitä tapahtuu, jos lisään kylmää vettä nopeasti kuumaan moottoriin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Onko turvallista täyttää tyhjä jäähdytysjärjestelmä heti kylmällä vedellä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Miten korjaan matalan jäähdytysnesteen ongelman turvallisesti?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mikä on tärkeää huomioida, kun jäähdytysneste on päässyt loppumaan?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mitä teen, jos moottori on ylikuumentunut ja jäähdytin on tyhjä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+  {
+    "page_content": "Milloin ja miten jäähdytysjärjestelmään voi lisätä vettä turvallisesti?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
+  },
+    {
+    "page_content": "Miten ehkäisen moottorin vaurioitumisen, jos jäähdytysjärjestelmässä on liian vähän nestettä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 8
   },
   {
     "page_content": "Kuinka monta voitelupistettä traktorissa on?",
-    "metadata": {"source": "question_data.json"},
-    "id": 9
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Kuinka monta kohtaa traktorissa täytyy voidella?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mitä teet voidellaksesi traktorin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mikä on traktorin voitelupisteiden lukumäärä?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Kuinka monta paikkaa traktorissa pitää voidella?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mikä on traktorin voitelupisteiden määrä, ja millä ne voidellaan?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Kuinka monta voitelupistettä traktorista löytyy?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Montako kohtaa traktorissa voidellaan voitelupuristimella?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mikä on voitelupisteiden määrä traktorissa, ja millä ne voidellaan?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Onko traktorissa voitelupisteitä, ja jos on, niin kuinka monta?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
+  },
+  {
+    "page_content": "Miten moni voitelupiste traktorissa on?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 9
   },
   {
     "page_content": "Milloin ilmanpuhdistajan öljy pitää vaihtaa?",
-    "metadata": {"source": "question_data.json"},
-    "id": 10
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Miten usein ilmanpuhdistimen öljy tulisi vaihtaa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on suositeltu ilmanpuhdistajan öljyn vaihtoväli?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Milloin ilmanpuhdistimen öljy on vaihdettava?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Onko olemassa vaihtoehtoisia aikoja ilmanpuhdistimen öljyn vaihtoon?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Kuinka usein ilmanpuhdistin tulee huoltaa öljynvaihdon suhteen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Milloin ilmanpuhdistajan öljy pitää vaihtaa, jos moottoriöljy vaihdetaan useammin kuin kerran viikossa?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Onko ilmanpuhdistajan öljyn vaihto sidoksissa muihin huoltotoimenpiteisiin?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Voiko ilmanpuhdistajan öljyn vaihdon ajoittaa moottoriöljyn vaihdon yhteyteen?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mitä suositellaan ilmanpuhdistimen öljyn vaihtoväliksi?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
+  },
+  {
+    "page_content": "Jos en vaihda öljyä kerran viikossa, milloin minun pitäisi vaihtaa ilmanpuhdistimen öljy?",
+    "metadata": {
+      "source": "question_data.json"
+    },
+    "answer_id": 10
   }
 ]

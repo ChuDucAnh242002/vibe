@@ -25,30 +25,27 @@ class ChromaService:
         It also creates a collection in the database to store the entries.
         """
         try:
-            embed_filepath = (
-                str(project_root)
-                + "/"
-                + os.getenv("MODEL_FOLDER")
-                + "/"
-                + os.getenv("EMBEDDING_MODEL")
-            )
             modelpath = str(project_root) + "/" + os.getenv("MODEL_FOLDER")
             self.filePath = str(project_root) + "/" + os.getenv("DOC_FOLDER") + "/"
 
-            # self.embedding_model = SentenceTransformer(embed_filepath)
             self.embedding_function = HuggingFaceEmbeddings(
                 cache_folder=modelpath, model_name=os.getenv("EMBEDDING_MODEL")
             )
+
         except Exception as e:
             print(f"Error loading model: {e}")
             raise
 
         self.chroma_client = chromadb.PersistentClient(path)
 
-        # self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
-        # self.chroma_client.delete_collection(name=os.getenv("CHAPTER1_COLLECTION_NAME"))
-        # self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
-        # self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_NAME"))
+        print("chroma_client")
+
+        self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
+        self.chroma_client.delete_collection(name=os.getenv("CHAPTER1_COLLECTION_NAME"))
+        self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
+        self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_NAME"))
+        self.chroma_client.delete_collection(name=os.getenv("TRACTOR_COLLECTION_NAME"))
+        self.chroma_client.delete_collection(name=os.getenv("TRACTOR2_COLLECTION_NAME"))
         # Uncomment line above for clearing the persistent storage
 
         self.collection = self.chroma_client.get_or_create_collection(
@@ -201,6 +198,7 @@ class ChromaService:
             return ""
         
         question_id = question[0].id
+        print(question_id)
         answer_document = self.vector_store_answers.get_by_ids([question_id])
         answer_page_content = answer_document[0].page_content
 
@@ -249,27 +247,47 @@ class ChromaService:
         question_path = self.filePath + "question_data.json"
         answer_path = self.filePath + "answer_data.json"
 
+        print(question_path)
+        print(answer_path)
+
         with open(question_path, 'r') as file:
             question_data = json.load(file)
+            print(question_data)
         with open(answer_path, 'r') as file:
             answer_data = json.load(file)
+            print(answer_data)
 
-        question_documents = [
-            Document(
-                page_content=question['page_content'],
-                metadata=question['metadata'],
-                id=question['id']
-            ) for question in question_data
-        ]
-        answer_documents = [
-            Document(
-                page_content=answer['page_content'],
-                metadata=answer['metadata'],
-                id=answer['id']
-            ) for answer in answer_data
-        ]
+        try:
+            question_documents = [
+                Document(
+                    page_content=question['page_content'],
+                    metadata=question['metadata'],
+                    id=question['answer_id']
+                ) for question in question_data
+            ]
+            answer_documents = [
+                Document(
+                    page_content=answer['page_content'],
+                    metadata=answer['metadata'],
+                    id=answer['id']
+                ) for answer in answer_data
+            ]
+        except Exception as e:
+            print(f"Create document errors: {e}")
 
-        uuids = [str(uuid.uuid4()) for _ in range(len(question_documents))]
+        uuids = [str(uuid.uuid4()) for _ in range(len(answer_documents))]
+        answer_uuids = {
+            answer_data[i]['id']:uuids[i] for i in range(len(answer_documents))
+        } 
+        question_uuids = []
+
+        try:
+            for question in question_data:
+                question_id = question['answer_id']
+                question_uuid = answer_uuids[question_id]
+                question_uuids.append(question_uuid)
+        except Exception as e:
+            print(f"Create question uuids errors: {e}")
 
         self.vector_store_questions.add_documents(documents=question_documents, ids=uuids)
         self.vector_store_answers.add_documents(documents=answer_documents, ids=uuids)

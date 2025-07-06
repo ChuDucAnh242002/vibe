@@ -52,3 +52,4 @@ langchain-huggingface==0.2.0
 langchain-chroma>=0.1.0
 langchain-core==0.3.64
 pypdf>=4.1.0
+posthog>=2.4.0,<6.0.0
