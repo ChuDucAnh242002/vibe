@@ -97,12 +97,28 @@ class AppManager:
         if self.services[Srv.AUDIO].is_recording:
             audio_data = self.services[Srv.AUDIO].stop_recording()
             if audio_data is not None:
-                self._process_recording(audio_data, all, silent)
+                self._process_recording_qa_pair(audio_data, all)
             elif self.args.cli:
                 self.services[Srv.CLI].print_text("No audio recorded.")
 
         else:
             self.services[Srv.AUDIO].start_recording()
+
+    def _process_recording_qa_pair(self, recording, all):
+        """
+        Transcribe audio with STT, detect intent, provide response based on
+        intent or if no intent was detected, provide an answer with text gen.
+
+        :param NDArray[floating[Any]] recording: The recorded audio data
+        :param all bool: Activate all services
+        """
+        
+        audio_text = self.services[Srv.STT].transcribe(recording)
+        self.logger.info(f"Text: {audio_text}")
+        self.services[Srv.CLI].print_text(f"Audio text: {audio_text}")
+
+        if all:
+            self.qa_pair_gen(audio_text, True)
 
     def _process_recording(self, recording, all, silent=False):
         """
@@ -168,7 +184,7 @@ class AppManager:
         :param str question: Question that is used to retrieve similar question
         """
         try:
-            answer = self.services[Srv.RAG].retrieve_similar_qa_pair(question)
+            answer = self.services[Srv.RAG].retrieve_similar_qa_pair_with_relevant_scores(question)
 
             self.services[Srv.CLI].print_text(answer)
             self.logger.info("Successfully retrieve QA pair")
@@ -362,31 +378,49 @@ class AppManager:
 
         self.logger.info("PERF : [text_gen] Done generating text")
         return
+    
+    def qa_pair_gen(self, input_text: str, synthesize: bool = False):
+        """
+        The QA pair generates text based on user's input text
+        Print the QA's generated text
+
+        :param str input_text: The user's input text
+        :param bool synthesize: If True, synthesize the generated text
+        """
+        self.logger.info("PERF : [text_gen] Generating text")
+        answer = self.services[Srv.RAG].retrieve_similar_qa_pair_with_relevant_scores(input_text)
+        self.services[Srv.CLI].print_text(answer, None, False)
+        self.services[Srv.CLI].print_separator()
+        if synthesize:
+            self.services[Srv.TTS].synthesize(answer)
+
+        self.logger.info("PERF : [QA_pair] Done generating text")
+        return
 
     def _load_services(self):
         """
         This function loads all the services based on the chosen input and output devices
         """
 
-        # try:
-        #     self.services[Srv.AUDIO] = AudioService(self)
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load audio service: {e}")
-        #     self.exit()
+        try:
+            self.services[Srv.AUDIO] = AudioService(self)
+        except Exception as e:
+            self.logger.error(f"Failed to load audio service: {e}")
+            self.exit()
 
-        # try:
-        #     self.services[Srv.STT] = SpeechToTextService(self.root)
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load stt service: {e}")
-        #     self.exit()
+        try:
+            self.services[Srv.STT] = SpeechToTextService(self.root)
+        except Exception as e:
+            self.logger.error(f"Failed to load stt service: {e}")
+            self.exit()
 
-        # try:
-        #     self.services[Srv.TTS] = TextToSpeech(
-        #         self.root, device_index=self.services[Srv.AUDIO].output_device_index
-        #     )
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load tts service: {e}")
-        #     self.exit()
+        try:
+            self.services[Srv.TTS] = TextToSpeech(
+                self.root, device_index=self.services[Srv.AUDIO].output_device_index
+            )
+        except Exception as e:
+            self.logger.error(f"Failed to load tts service: {e}")
+            self.exit()
 
         try:
             self.services[Srv.TEXT_GEN] = TextGenService(self.root)

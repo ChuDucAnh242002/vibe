@@ -40,12 +40,12 @@ class ChromaService:
 
         print("chroma_client")
 
-        self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
-        self.chroma_client.delete_collection(name=os.getenv("CHAPTER1_COLLECTION_NAME"))
-        self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
-        self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_NAME"))
-        self.chroma_client.delete_collection(name=os.getenv("TRACTOR_COLLECTION_NAME"))
-        self.chroma_client.delete_collection(name=os.getenv("TRACTOR2_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("CHAPTER1_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("TRACTOR_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("TRACTOR2_COLLECTION_NAME"))
         # Uncomment line above for clearing the persistent storage
 
         self.collection = self.chroma_client.get_or_create_collection(
@@ -198,6 +198,35 @@ class ChromaService:
             return ""
         
         question_document = question[0]
+        answer_uuid = question_document.metadata.get('answer_uuid')
+
+        if not answer_uuid:
+            print("No answer_uuid in question metadata.")
+            return ""
+
+        answer_document = self.vector_store_answers.get_by_ids([answer_uuid])
+        answer_page_content = answer_document[0].page_content
+
+        return answer_page_content
+    
+    def retrieve_similar_qa_pair_with_relevant_scores(self, query, n=1):
+        question = self.vector_store_questions.similarity_search_with_relevance_scores(
+            query=query,
+            k=n
+        )
+
+        if len(question) == 0 or not question[0][0].id:
+            return ""
+        
+        question_relevant_score = question[0][1]
+        question_document = question[0][0]
+        question_page_content = question_document.page_content
+        # print(f"Question relevant score: {question_relevant_score}")
+        # print(f"Question page content: {question_page_content}")
+
+        if question_relevant_score < -3:
+            return "En tiedä."
+
         answer_uuid = question_document.metadata.get('answer_uuid')
 
         if not answer_uuid:
