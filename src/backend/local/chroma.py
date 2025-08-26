@@ -38,8 +38,6 @@ class ChromaService:
 
         self.chroma_client = chromadb.PersistentClient(path)
 
-        print("chroma_client")
-
         # self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
         # self.chroma_client.delete_collection(name=os.getenv("CHAPTER1_COLLECTION_NAME"))
         # self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
@@ -70,6 +68,14 @@ class ChromaService:
 
         self.collection_answer = self.chroma_client.get_or_create_collection(
             name=os.getenv("ANSWER_COLLECTION_NAME")
+        )
+
+        self.collection_question_test = self.chroma_client.get_or_create_collection(
+            name=os.getenv("QUESTION_COLLECTION_TEST_NAME")
+        )
+
+        self.collection_answer_test = self.chroma_client.get_or_create_collection(
+            name=os.getenv("ANSWER_COLLECTION_TEST_NAME")
         )
 
         self.vector_store = Chroma(
@@ -105,6 +111,17 @@ class ChromaService:
         self.vector_store_answers = Chroma(
             client=self.chroma_client,
             collection_name=os.getenv("ANSWER_COLLECTION_NAME"),
+            embedding_function=self.embedding_function,          
+        )
+        self.vector_store_questions_test = Chroma(
+            client=self.chroma_client,
+            collection_name=os.getenv("QUESTION_COLLECTION_TEST_NAME"),
+            embedding_function=self.embedding_function,          
+        )
+
+        self.vector_store_answers_test = Chroma(
+            client=self.chroma_client,
+            collection_name=os.getenv("ANSWER_COLLECTION_TEST_NAME"),
             embedding_function=self.embedding_function,          
         )
 
@@ -210,7 +227,7 @@ class ChromaService:
         return answer_page_content
     
     def retrieve_similar_qa_pair_with_relevant_scores(self, query, n=1):
-        question = self.vector_store_questions.similarity_search_with_relevance_scores(
+        question = self.vector_store_questions_test.similarity_search_with_relevance_scores(
             query=query,
             k=n
         )
@@ -220,7 +237,7 @@ class ChromaService:
         
         question_relevant_score = question[0][1]
         question_document = question[0][0]
-        question_page_content = question_document.page_content
+        # question_page_content = question_document.page_content
         # print(f"Question relevant score: {question_relevant_score}")
         # print(f"Question page content: {question_page_content}")
 
@@ -233,7 +250,7 @@ class ChromaService:
             print("No answer_uuid in question metadata.")
             return ""
 
-        answer_document = self.vector_store_answers.get_by_ids([answer_uuid])
+        answer_document = self.vector_store_answers_test.get_by_ids([answer_uuid])
         answer_page_content = answer_document[0].page_content
 
         return answer_page_content
@@ -278,8 +295,8 @@ class ChromaService:
             print(f"Error adding json to ChromaDB: {e}")
 
     def add_qa_pair(self):
-        question_path = self.filePath + "question_data.json"
-        answer_path = self.filePath + "answer_data.json"
+        question_path = self.filePath + "question_data_test.json"
+        answer_path = self.filePath + "answer_data_test.json"
 
         with open(question_path, 'r') as file:
             question_data = json.load(file)
@@ -311,8 +328,8 @@ class ChromaService:
             return
 
         try:
-            self.vector_store_questions.add_documents(documents=question_documents)
-            self.vector_store_answers.add_documents(documents=answer_documents)
+            self.vector_store_questions_test.add_documents(documents=question_documents)
+            self.vector_store_answers_test.add_documents(documents=answer_documents)
         except Exception as e:
             print(f"Error adding documents to vector store: {e}")
 

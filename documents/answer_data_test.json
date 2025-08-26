@@ -1,0 +1,102 @@
+[
+    {
+        "page_content": "Paina kauko-ohjaimen LOCK-katkaisinta, jolloin kaikki ovet ja takaluukku lukittuvat. UNLOCK-katkaisimella avataan lukitus",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 1
+    },
+    {
+        "page_content": "EV-ajotilassa auto kulkee pelkästään ajoakkuun varastoidulla sähköenergialla ilman polttomoottoria. Tämä tila poistuu käytöstä, jos akun varaustaso laskee, ajetaan kovaa tai ilmastointia käytetään paljon",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 2
+    },
+    {
+        "page_content": "Sarjahybriditilassa polttomoottori tuottaa sähköä, jolla auto kulkee. Tätä käytetään esimerkiksi, kun akku on vähissä tai ajetaan ylämäkeen",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 3
+    },
+    {
+        "page_content": "Rinnakkaishybriditilassa auto käyttää sekä polttomoottoria että sähkömoottoreita samanaikaisesti, mikä mahdollistaa suuremman tehon esimerkiksi moottoritiellä ajettaessa",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 4
+    },
+    {
+        "page_content": "Kun kuljettaja nostaa jalan kaasulta tai painaa jarrua, auton liike-energia muunnetaan sähköenergiaksi, joka lataa akkua. “B”-asentoa käyttäen jarrutusvoimaa voi tehostaa",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 5
+    },
+    {
+        "page_content": "Polttomoottori käynnistyy automaattisesti esimerkiksi jos akku on vähissä, sää on kylmä tai kuuma, ilmastointi on päällä tai autoa ei ole tankattu pitkään aikaan",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 6
+    },
+    {
+        "page_content": "Tankkaa aina vähintään 15 litraa kolmen kuukauden välein, jotta polttoaine ei vanhene ja moottori pysyy kunnossa",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 7
+    },
+    {
+        "page_content": "Ajoakku on suljettu litiumioniakku, jota ei saa purkaa, irrottaa tai käyttää muuhun kuin auton käyttöön. Se tulee huoltaa vain valtuutetussa huollossa",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 8
+    },
+    {
+        "page_content": "Vältä jatkuvaa nopeaa kiihdyttämistä ja hidastamista, säilytä auto kohtuullisessa lämpötilassa ja lataa akkua säännöllisesti, jotta akun käyttöikä pitenee",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 9
+    },
+    {
+        "page_content": "Akustinen autohälytysjärjestelmä (AVAS) tuottaa ääntä alle 35 km/h nopeudessa, jotta jalankulkijat huomaavat lähestyvän auton, kun polttomoottori ei ole käynnissä",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 10
+    },
+    {
+        "page_content": "Kolaritilanteessa pysäytä auto turvalliseen paikkaan, kytke varoitusvilkut, älä koske suurjänniteosiin ja ota yhteys pelastuspalveluun. Ajoakun vuoto on hengenvaarallinen",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 11
+    },
+    {
+        "page_content": "Sydämentahdistinta tai defibrillaattoria käyttävien henkilöiden ei tule olla lähellä latausliittimiä, pikalaturia tai auton sisällä latauksen aikana sähkömagneettisten häiriöiden takia",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 12
+    },
+    {
+        "page_content": "Yli +45 °C lämpötilassa auto voi rajoittaa käynnistymistä ja latausta. Anna auton jäähtyä ja vältä raskasta ajoa",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 13
+    },
+    {
+        "page_content": "Kylmissä olosuhteissa moottori voi käynnistyä usein akun suojaamiseksi. EV-ajomatka lyhenee ja latausaika pitenee",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 14
+    },
+    {
+        "page_content": "Jos polttoaine loppuu, moottori ei käynnisty edes latausta varten. Auto kulkee vain akulla, suorituskyky heikkenee ja lämmitys lakkaa toimimasta (ellei autossa ole sähkölämmitintä)",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 15
+    },
+    {
+        "page_content": "Sähköiset ikkunat avataan painamalla katkaisinta alas ja suljetaan vetämällä ylös. Lukituskytkimellä voidaan estää matkustajien ikkunatoiminnot",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 16
+    },
+    {
+        "page_content": "Virtakytkimessä on kolme asentoa: OFF (auto sammuu), ACC (osa laitteista toimii) ja ON (järjestelmät päällä). Jarrua painamalla auto siirtyy READY-tilaan",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 17
+    },
+    {
+        "page_content": "EV-kytkintä painamalla kuljettaja voi priorisoida sähköajon, jolloin auto pyrkii kulkemaan mahdollisimman paljon ilman polttomoottoria",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 18
+    },
+    {
+        "page_content": "Akun säästötilan katkaisin käynnistää polttomoottorin säästääkseen akun virtaa myöhempää käyttöä varten",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 19
+    },
+    {
+        "page_content": "Akun lataustilan katkaisin käynnistää moottorin ja lataa ajoakun lähes täyteen, vaikka auto ei olisi liikkeessä",
+        "metadata": {"source": "answer_data_test.json"},
+        "id": 20
+    }
+]
