@@ -39,27 +39,20 @@ class ChromaService:
         self.chroma_client = chromadb.PersistentClient(path)
 
         # self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
-        # self.chroma_client.delete_collection(name=os.getenv("CHAPTER1_COLLECTION_NAME"))
+
+        # self.chroma_client.delete_collection(name=os.getenv("CHROMA_TEST_COLLECTION_NAME"))
         # self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
         # self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_NAME"))
-        # self.chroma_client.delete_collection(name=os.getenv("TRACTOR_COLLECTION_NAME"))
-        # self.chroma_client.delete_collection(name=os.getenv("TRACTOR2_COLLECTION_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_TEST_NAME"))
+        # self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_TEST_NAME"))
         # Uncomment line above for clearing the persistent storage
 
         self.collection = self.chroma_client.get_or_create_collection(
             name=os.getenv("CHROMA_COLLECTION_NAME")
         )
 
-        self.collection_chapter1 = self.chroma_client.get_or_create_collection(
-            name=os.getenv("CHAPTER1_COLLECTION_NAME")
-        )
-
-        self.collection_tractor = self.chroma_client.get_or_create_collection(
-            name=os.getenv("TRACTOR_COLLECTION_NAME")
-        )
-
-        self.collection_tractor2 = self.chroma_client.get_or_create_collection(
-            name=os.getenv("TRACTOR2_COLLECTION_NAME")
+        self.collection = self.chroma_client.get_or_create_collection(
+            name=os.getenv("CHROMA_TEST_COLLECTION_NAME")
         )
 
         self.collection_question = self.chroma_client.get_or_create_collection(
@@ -84,21 +77,9 @@ class ChromaService:
             embedding_function=self.embedding_function,
         )
 
-        self.vector_store_chapter1 = Chroma(
+        self.vector_store_test = Chroma(
             client=self.chroma_client,
-            collection_name=os.getenv("CHAPTER1_COLLECTION_NAME"),
-            embedding_function=self.embedding_function,
-        )
-
-        self.vector_store_tractor = Chroma(
-            client=self.chroma_client,
-            collection_name=os.getenv("TRACTOR_COLLECTION_NAME"),
-            embedding_function=self.embedding_function,
-        )
-
-        self.vector_store_tractor2 = Chroma(
-            client=self.chroma_client,
-            collection_name=os.getenv("TRACTOR2_COLLECTION_NAME"),
+            collection_name=os.getenv("CHROMA_TEST_COLLECTION_NAME"),
             embedding_function=self.embedding_function,
         )
 
@@ -165,7 +146,7 @@ class ChromaService:
         Chroma.from_documents(
             documents=chunked_documents,
             embedding=self.embedding_function,
-            collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
+            collection_name=os.getenv("CHROMA_TEST_COLLECTION_NAME"),
             client=self.chroma_client,
         )
         print(f"Added {len(chunked_documents)} chunks to chroma db")
@@ -173,7 +154,7 @@ class ChromaService:
         # data = self.collection.get()
         # print(data)
 
-    def retrieve_similar_entries(self, query, n=1, similarity_threshold=0.65):
+    def retrieve_similar_entries(self, query, n=3, similarity_threshold=0.65):
         """
         Retrieve the most similar entries from the database based on the query.
         The function uses cosine similarity to find the closest match.
@@ -189,7 +170,7 @@ class ChromaService:
         try:
             print("Query: ", query)
 
-            results = self.vector_store_tractor2.similarity_search(
+            results = self.vector_store_test.similarity_search(
                 query=query,
                 k=n,
             )
@@ -241,7 +222,7 @@ class ChromaService:
         # print(f"Question relevant score: {question_relevant_score}")
         # print(f"Question page content: {question_page_content}")
 
-        if question_relevant_score < -3:
+        if question_relevant_score < -160:
             return "En tiedä."
 
         answer_uuid = question_document.metadata.get('answer_uuid')
@@ -333,7 +314,7 @@ class ChromaService:
         except Exception as e:
             print(f"Error adding documents to vector store: {e}")
 
-        data_question = self.collection_answer.get()
+        data_question = self.collection_question.get()
         data_answer = self.collection_answer.get()
         print(data_question)
         print(data_answer)

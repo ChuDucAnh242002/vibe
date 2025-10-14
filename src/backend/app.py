@@ -462,11 +462,11 @@ class AppManager:
         #     self.logger.error(f"Failed to load baseform service: {e}")
         #     self.exit()
 
-        try:
-            self.services[Srv.QA] = QuestionAnsweringService(self.root)
-        except Exception as e:
-            self.logger.error(f"Failed to load question answering service {e}")
-            self.exit()
+        # try:
+        #     self.services[Srv.QA] = QuestionAnsweringService(self.root)
+        # except Exception as e:
+        #     self.logger.error(f"Failed to load question answering service {e}")
+        #     self.exit()
 
     def _setup_env(self):
         """
