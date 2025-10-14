@@ -218,12 +218,6 @@ class AppManager:
                 self.logger.info("Successfully add QA pair to ChromaDB")
             except:
                 self.logger.error(f"Failed to add QA pair to ChromaDB: {e}")
-        if("json" in file_name):
-            try:
-                self.services[Srv.RAG].add_json(file_name)
-                self.logger.info("Successfully add json to ChromaDB")
-            except:
-                self.logger.error(f"Failed to add json to ChromaDB: {e}")
         else:
             try:
                 self.services[Srv.RAG].save_pdf_to_db(file_name)

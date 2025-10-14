@@ -39,7 +39,6 @@ class ChromaService:
         self.chroma_client = chromadb.PersistentClient(path)
 
         # self.chroma_client.delete_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
-
         # self.chroma_client.delete_collection(name=os.getenv("CHROMA_TEST_COLLECTION_NAME"))
         # self.chroma_client.delete_collection(name=os.getenv("QUESTION_COLLECTION_NAME"))
         # self.chroma_client.delete_collection(name=os.getenv("ANSWER_COLLECTION_NAME"))
@@ -143,18 +142,24 @@ class ChromaService:
         )
         chunked_documents = text_splitter.split_documents(document)
 
-        Chroma.from_documents(
-            documents=chunked_documents,
-            embedding=self.embedding_function,
-            collection_name=os.getenv("CHROMA_TEST_COLLECTION_NAME"),
-            client=self.chroma_client,
-        )
+        if("My18" in file_name):
+            Chroma.from_documents(
+                documents=chunked_documents,
+                embedding=self.embedding_function,
+                collection_name=os.getenv("CHROMA_TEST_COLLECTION_NAME"),
+                client=self.chroma_client,
+            )
+        else:
+            Chroma.from_documents(
+                documents=chunked_documents,
+                embedding=self.embedding_function,
+                collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
+                client=self.chroma_client,
+            )
+        
         print(f"Added {len(chunked_documents)} chunks to chroma db")
 
-        # data = self.collection.get()
-        # print(data)
-
-    def retrieve_similar_entries(self, query, n=3, similarity_threshold=0.65):
+    def retrieve_similar_entries(self, query, n=3):
         """
         Retrieve the most similar entries from the database based on the query.
         The function uses cosine similarity to find the closest match.
@@ -186,27 +191,6 @@ class ChromaService:
 
         return result
     
-    def retrieve_similar_qa_pair(self, query, n=1):
-        question = self.vector_store_questions.similarity_search(
-            query=query,
-            k=n
-        )
-
-        if len(question) == 0 or not question[0].id:
-            return ""
-        
-        question_document = question[0]
-        answer_uuid = question_document.metadata.get('answer_uuid')
-
-        if not answer_uuid:
-            print("No answer_uuid in question metadata.")
-            return ""
-
-        answer_document = self.vector_store_answers.get_by_ids([answer_uuid])
-        answer_page_content = answer_document[0].page_content
-
-        return answer_page_content
-    
     def retrieve_similar_qa_pair_with_relevant_scores(self, query, n=1):
         question = self.vector_store_questions_test.similarity_search_with_relevance_scores(
             query=query,
@@ -235,49 +219,14 @@ class ChromaService:
         answer_page_content = answer_document[0].page_content
 
         return answer_page_content
-    
-    def add_json(self, file_name=""):
-        """
-        Save json to ChromaDB
 
-        :param str file_path: The path of the json file
-        """
-        file_path = self.filePath + file_name
-
-        print(file_path)
-
-        with open(file_path, 'r') as file:
-            file_data = json.load(file)
-
-        file_documents = [
-            Document(
-                page_content=file['page_content'],
-                metadata=file['metadata'],
-                id=file['id']
-            ) for file in file_data
-        ]
-
-        uuids = [str(uuid.uuid4()) for _ in range(len(file_documents))]
-        try:
-
-            if os.getenv("CHAPTER1_COLLECTION_NAME") in file_name:
-                self.vector_store_chapter1.add_documents(documents=file_documents, ids=uuids)
-                data = self.collection_chapter1.get()
-                print(data)
-            elif os.getenv("TRACTOR2_COLLECTION_NAME") in file_name:
-                self.vector_store_tractor2.add_documents(documents=file_documents, ids=uuids)
-                data = self.collection_tractor2.get()
-                print(data)
-            elif os.getenv("TRACTOR_COLLECTION_NAME") in file_name:
-                self.vector_store_tractor.add_documents(documents=file_documents, ids=uuids)
-                data = self.collection_tractor.get()
-                print(data)
-        except Exception as e:
-            print(f"Error adding json to ChromaDB: {e}")
-
-    def add_qa_pair(self):
-        question_path = self.filePath + "question_data_test.json"
-        answer_path = self.filePath + "answer_data_test.json"
+    def add_qa_pair(self, file_name="qa"):
+        if (file_name == "qa_test"):
+            question_path = self.filePath + "question_data_test.json"
+            answer_path = self.filePath + "answer_data_test.json"
+        else:
+            question_path = self.filePath + "question_data.json"
+            answer_path = self.filePath + "answer_data.json"
 
         with open(question_path, 'r') as file:
             question_data = json.load(file)
@@ -309,8 +258,12 @@ class ChromaService:
             return
 
         try:
-            self.vector_store_questions_test.add_documents(documents=question_documents)
-            self.vector_store_answers_test.add_documents(documents=answer_documents)
+            if (file_name == "qa_test"):
+                self.vector_store_questions_test.add_documents(documents=question_documents)
+                self.vector_store_answers_test.add_documents(documents=answer_documents)
+            else:
+                self.vector_store_questions.add_documents(documents=question_documents)
+                self.vector_store_answers.add_documents(documents=answer_documents)
         except Exception as e:
             print(f"Error adding documents to vector store: {e}")
 
