@@ -218,6 +218,13 @@ class AppManager:
                 self.logger.info("Successfully add QA pair to ChromaDB")
             except:
                 self.logger.error(f"Failed to add QA pair to ChromaDB: {e}")
+
+        if(file_name.strip() == "qa_test"):
+            try:
+                self.services[Srv.RAG].add_qa_pair()
+                self.logger.info("Successfully add QA pair to ChromaDB")
+            except:
+                self.logger.error(f"Failed to add QA pair to ChromaDB: {e}")
         else:
             try:
                 self.services[Srv.RAG].save_pdf_to_db(file_name)
