@@ -1,0 +1,1140 @@
+[
+  {
+    "page_content": "Miten auton ovet ja takaluukku lukitaan kauko-ohjaimella?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mikä painike kauko-ohjaimessa lukitsee autosi ovet?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Miten voit lukita kaikki autosi ovet ja takaluukun yhdellä napinpainalluksella?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitkä ovat auton kauko-ohjaimen kaksi pääpainiketta oviin liittyen?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä tapahtuu, kun painat kauko-ohjaimen LOCK-painiketta?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Millä kauko-ohjaimen painikkeella lukitset autosi?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mitä toimintoa varten kauko-ohjaimessa on LOCK-painike?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Miten voit varmistaa, että autosi ovet ja takaluukku ovat lukitussa tilassa kauko-ohjaimen avulla?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Millä tavalla voit lukita kaikki autosi lukot yhdellä painikkeella?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Jos haluat lukita autosi ovet, mitä painiketta kauko-ohjaimessa sinun tulee painaa?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Onko LOCK-painike kauko-ohjaimessa avaamiseen vai lukitsemiseen tarkoitettu?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 1
+  },
+  {
+    "page_content": "Mikä on EV-ajotila?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Millä energialla auto kulkee EV-ajotilassa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Toimiiko polttomoottori EV-ajotilassa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mitä tapahtuu, jos akun varaustaso laskee EV-ajotilassa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Milloin EV-ajotila poistuu käytöstä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mikä energialähde ohjaa autoa EV-ajotilassa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Voiko EV-ajotilassa käyttää polttomoottoria?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mikä vaikuttaa EV-ajotilan käytettävyyteen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Miten EV-ajotila eroaa muista ajotiloista?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Onko EV-ajotilassa käytössä ajoakku?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Mikä voi vaikuttaa EV-ajotilan toimintaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 2
+  },
+  {
+    "page_content": "Millä tavalla polttomoottori toimii sarjahybridiajoneuvoissa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Miten sarjahybridiautot käyttävät polttomoottoria ajon aikana?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mikä on polttomoottorin rooli sarjahybridiauton liikkeessä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Milloin sarjahybridiauton polttomoottori yleensä käynnistetään?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Miten sarjahybridiauto hyödyntää polttomoottoriaan akkujen varauksen ollessa alhainen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Miten sarjahybridiautot selviävät mäkisestä maastosta?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Miten sarjahybridi kuljettaa autoa ajon aikana, jos akku ei riitä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mikä on sarjahybridiauton pääasiallinen energianlähde pitkillä matkoilla?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Miten sarjahybridit käyttävät polttomoottoria ajon aikana?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mikä on polttomoottorin tehtävä sarjahybridiautossa, kun autolla ajetaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mitä tarkoittaa sarjahybriditila?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 3
+  },
+  {
+    "page_content": "Mitä hyötyä on rinnakkaishybriditilasta?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mikä on rinnakkaishybridijärjestelmän pääominaisuus?", 
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Miten rinnakkaishybridi eroaa muista hybridityypeistä tehonsa osalta?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mitkä kaksi moottorityyppiä rinnakkaishybridissä toimivat yhdessä?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mitä rinnakkaishybridi tekee, jotta saadaan enemmän tehoa?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Millä tavoin rinnakkaishybridi hyödyntää molempia moottoreitaan?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Millä tavalla rinnakkaishybridi auttaa moottoritiellä?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Miten rinnakkaishybridi saavuttaa paremman suorituskyvyn?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Mikä on rinnakkaishybridin keskeinen tekninen ominaisuus?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Minkä tyyppisessä hybridissä moottorit toimivat yhdessä?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Kuinka rinnakkaishybridit eroavat sarjahybrideistä?",  
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 4
+  },
+  {
+    "page_content": "Miten latausjarrutus toimii?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten sähköauto regeneroi energiaa?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Kuinka sähköauton akku latautuu ajon aikana?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Mitä tapahtuu auton liike-energialle jarrutettaessa sähköautossa?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Kuinka regeneratiivinen jarrutus toimii?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten sähköauto hyödyntää jarrutuksessa syntyvää energiaa?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Mikä on regeneratiivisen jarrutuksen perusperiaate?",  
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten sähköauton 'B'-asento vaikuttaa jarrutukseen ja akun lataamiseen?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten regeneratiivinen jarrutus auttaa pidentämään sähköauton toimintasädettä?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Miten sähköauton energiaa voidaan ottaa talteen jarrutuksesta?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Mitä etuja regeneratiivisella jarrutuksella on sähköautoissa?",
+    "metadata": {"source": "question_data.json"},
+    "answer_id": 5
+  },
+  {
+    "page_content": "Milloin polttomoottori käynnistyy automaattisesti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitkä tekijät voivat vaikuttaa auton suorituskykyyn tai käynnistymiseen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä ongelmia voi ilmetä auton käynnistyksessä?",      
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitkä olosuhteet voivat vaatia ylimääräistä huomiota autossa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitkä asiat voivat vaikuttaa auton toimintaan ja vaatia korjausta tai huoltoa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä asioita kannattaa tarkistaa, jos auto ei käynnisty tai toimii epätavallisesti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mistä voi johtua, että auton akku tyhjenee nopeasti?", 
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä vaikutuksia lämpötilalla on auton toimintaan?",   
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä ongelmia voi ilmetä, jos auton polttoainetaso on liian alhainen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitkä ovat mahdollisia syitä ilmastoinnin epäonnistumiselle tai tehottomuudelle?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä tekijöitä on otettava huomioon auton käyttöön liittyvissä huolto- ja ylläpitotoimissa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 6
+  },
+  {
+    "page_content": "Mitä pitää huomioida tankattaessa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Miten varmistan, että autoni polttoaine pysyy tuoreena ja moottori toimii luotettavasti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mikä on vähimmäismäärä polttoainetta, jonka minun pitäisi tankata säännöllisesti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Kuinka usein minun tulisi tankata autoani, jotta polttoaine ei vanhene?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mitä minun pitäisi tehdä, jotta autoni moottori pysyy hyvässä kunnossa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Onko olemassa tietty määrä polttoainetta, joka kannattaa aina tankata?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mikä on tärkeää polttoaineen säilyvyyden kannalta autossani?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mitä voin tehdä estääkseni polttoaineen vanhenemisen autossani?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Miten pitää huolehtia autoni polttoainejärjestelmästä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Onko säännöllinen tankkaus tärkeää autoni moottorin kannalta?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Jos autoni seisoo pitkään, miten varmistan, että polttoaine on edelleen käyttökelpoista?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 7
+  },
+  {
+    "page_content": "Mitä varotoimia liittyy ajoakkuun?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mikä on sähköautojen ajoakun tyyppi ja mitä sen kanssa ei saa tehdä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Millainen akku on ajoakku ja mitä toimenpiteitä sen kanssa tulee välttää?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Miten ajoakkua tulee käsitellä ja missä se tulee huoltaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Onko ajoakku avattava tai purkava komponentti? Jos ei, miksi?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mitä tulee tehdä, jos ajoakku tarvitsee huoltoa?",     
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Miten ajoakkua tulisi käsitellä turvallisuuden kannalta?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mihin tarkoitukseen ajoakkua on tarkoitettu ja missä se pitää huoltaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Miten ajoakku poikkeaa muista akuista ja miksi?",      
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Onko ajoakku irrotettava ja voiko sitä käyttää muuhun tarkoitukseen kuin auton?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Mitä erityisvarotoimia liittyy sähköauton ajoakkuun ja sen huoltoon?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 8
+  },
+  {
+    "page_content": "Miten akun käyttöikä pitenee?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mikä on keskeistä sähköauton akun keston optimoimisessa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mitä asioita kannattaa välttää sähköauton akun terveyden ylläpitämiseksi?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Millä tavoin ajotapa vaikuttaa sähköauton akun käyttöikään?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mitkä ovat tärkeimmät tekijät, jotka vaikuttavat sähköauton akun kulumiseen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Miten auton lämpötila vaikuttaa sähköauton akun suorituskykyyn ja käyttöikään?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Miten akun latausrutiinit vaikuttavat sähköauton akun elinikään?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mitä toimenpiteitä voit tehdä maksimoidaksesi sähköautosi akun keston?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Millä tavoin voit parantaa sähköauton akun tehokkuutta pitkällä aikavälillä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mitkä ovat parhaat käytännöt sähköauton akun hoitoon?",    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Miten voit varmistaa, että sähköautosi akku kestää mahdollisimman pitkään?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 9
+  },
+  {
+    "page_content": "Mikä on akustinen autohälytysjärjestelmä (AVAS)?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on sähköautojen ominaisuus, jonka tarkoitus on varoittaa jalankulkijoita?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mitä ominaisuutta sähköautot käyttävät varoittaakseen äänettömästi liikkuvista autoista jalankulkijoita alhaisilla nopeuksilla?",  
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on laite, jonka sähköautot on varustettu antamaan ääntä alhaisilla nopeuksilla?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on järjestelmä, jonka tehtävä on tehdä sähköautot havaittaviksi jalankulkijoille hitailla nopeuksilla?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mitä teknologiaa käytetään sähköautojen varoittamiseen jalankulkijoista alhaisilla nopeuksilla?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on sähköautojen lisävaruste, joka lähettää ääntä varmistaakseen jalankulkijoiden turvallisuuden?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on järjestelmä, joka luo äänen alle 35 km/h sähköautossa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on laite, joka tekee sähköauton kuultavaksi alle 35 km/h nopeudella?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mitä ominaisuutta käytetään sähköautoissa turvallisuuden parantamiseksi jalankulkijoille hitaalla nopeudella?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mikä on sähköauton komponentti, joka tuottaa ääntä alle 35 km/h?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 10
+  },
+  {
+    "page_content": "Mitä tehdä kolaritilanteessa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Olen huomannut sähköautostani vuotavan nestettä. Mitä minun pitäisi tehdä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Sähköautoni on juuri kokenut kolauksen ja huomaan siitä vuotavan nestettä. Miten toimia?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Autoni on osallistunut onnettomuuteen ja nyt näen sen alta vuotavan outoa nestettä. Onko kyseessä sähköauton akkuneste ja mitä teen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Huomasin sähköautoni pohjassa lätäkön ja epäilen akun vuotavan. Mitä ohjeita minun tulisi noudattaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Sähköautostani haisee outo kemiallinen haju ja huomaan nestettä. Kuinka toimin?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Olen ajanut sähköautollani ja nyt se ei enää käynnisty ja näyttää siltä, että jostain vuotaa. Mitä teen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Olen havainnut, että sähköautoni vuotaa nestettä onnettomuuden jälkeen. Miten turvaan itseni ja muut?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Sähköautoni on joutunut vesivahinkoon ja epäilen akkua vaurioituneen. Miten toimin turvallisesti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Autoni akusta näyttää vuotavan nestettä. Mitä teen ensiavuksi ja miten saan itseni ja muut turvaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Sähköautoni vaurioitui ja nyt huomaan siitä vuotavan nestettä. Mikä on tärkein asia, jonka pitäisi tehdä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 11
+  },
+  {
+    "page_content": "Miten henkilöiden, joilla on sydämentahdistin, tulee toimia latauksen aikana?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Missä ihmiset, joilla on lääkinnällisiä laitteita, kuten sydämentahdistin, eivät saa oleskella ladattaessa sähkölaitteita?",       
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Mitä tulee välttää, jos sinulla on lääketieteellinen laite ja lataat puhelimesi tai muun elektronisen laitteen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Missä sinun ei tulisi olla, kun lataat laitteita, jos sinulla on lääketieteellinen laite?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Missä ihmisten, joilla on herkkiä lääkinnällisiä laitteita, tulisi välttää oleskelua latauksen aikana?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Mikä on varotoimenpide henkilöille, joilla on sydämentahdistin tai vastaava laite, latauksen aikana?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Mitä tulee välttää lähellä latausliittimiä ja pikalatureita, jos sinulla on sydämentahdistin?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Missä sydämentahdistinta käyttävien ihmisten ei pitäisi oleskella ladattaessa laitteitaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Mitä varotoimia on noudatettava, kun lataat puhelimesi tai muun elektronisen laitteesi, jos sinulla on lääkinnällinen laite?",     
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Missä sydämentahdistimen käyttäjien ei pitäisi oleskella laitteita ladattaessa, ja miksi?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Mitä toimia tulee välttää ladattaessa laitteita, jos olet käyttänyt lääkinnällisiä laitteita, jotka ovat alttiita sähkömagneettiselle häiriölle?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 12
+  },
+  {
+    "page_content": "Miten toimia erittäin kuumissa olosuhteissa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mikä voi vaikuttaa auton toimintaan äärimmäisen kuumuudessa?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mitä tapahtuu autolle, kun lämpötila nousee yli 45 asteeseen?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Miten korkeat lämpötilat voivat vaikuttaa auton käynnistämiseen ja lataukseen?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mitä minun pitäisi tehdä, jos autoni tuntuu toimivan oudosti kuumuudessa?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mitä varotoimenpiteitä minun tulisi noudattaa erittäin kuumalla säällä?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Miten voin estää autoani ylikuumenemasta?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mitä suositellaan tekemään, jos auto ei käynnisty kuumalla säällä?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Voiko korkea lämpötila vaikuttaa akun lataamiseen autossa?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mitkä ovat auton ylikuumenemisen oireet?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Mitä teen, jos autoni on juuri pysäköity suoraan auringonpaisteeseen ja olen lähdössä ajamaan?",
+    "metadata": {"source": "auton_huolto.json"},
+    "answer_id": 13
+  },
+  {
+    "page_content": "Miten toimia erittäin kylmissä olosuhteissa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Mitkä ovat sähköauton toimintaa talviolosuhteissa koskevat vaikutukset?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Miten kylmä sää vaikuttaa sähköauton suorituskykyyn?", 
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Mitä sähköauton omistajan tulisi ottaa huomioon talvella?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Miten kylmä sää vaikuttaa sähköauton akun käyttöikään ja toimintasäteeseen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Mitä ongelmia sähköauton kanssa voi ilmetä kylmällä säällä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Miten kylmä vaikuttaa sähköautojen latausnopeuteen ja -tehokkuuteen?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Miksi sähköautojen toimintasäde voi lyhentyä talvella?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Mitä toimenpiteitä voin tehdä parantaakseni sähköautoni suorituskykyä talvella?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Mitä sähköauton lämmitysjärjestelmät tekevät kylmällä säällä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Miten kylmä sää vaikuttaa sähköautojen akun latausaikaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 14
+  },
+  {
+    "page_content": "Mitä tehdä, jos auton polttoaine loppuu?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mikä on yleisin ongelma, joka aiheuttaa auton käynnistymättömyyden?",
+    "metadata": {"source": "auton_vikatilanteet.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mitä tapahtuu, jos auton akku on täysin tyhjä?",       
+    "metadata": {"source": "auton_akku.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Miten auton lämmitysjärjestelmä vaikuttaa, jos moottori ei käynnisty?",
+    "metadata": {"source": "auton_lämmitys.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mitkä ovat auton toiminnan rajoitukset, kun moottori ei käynnisty?",
+    "metadata": {"source": "auton_toiminta.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Miten latausjärjestelmä vaikuttaa auton käynnistymiseen?",
+    "metadata": {"source": "latausjärjestelmä.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mitä ongelmia voi ilmetä, jos auton moottori ei toimi?",
+    "metadata": {"source": "auton_ongelmat.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mitä seurauksia on, jos auton moottori ei käynnisty ja lataus ei toimi?",
+    "metadata": {"source": "seuraukset.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Miksi auton suorituskyky heikkenee, jos moottori ei käynnisty?",
+    "metadata": {"source": "suorituskyky.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mitä tapahtuisi, jos autossa ei olisi sähkölämmitintä ja moottori ei käynnistyisi?",
+    "metadata": {"source": "sähkölämmitin.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Mitä merkittäviä asioita tapahtuu, kun auto ei käynnisty?",
+    "metadata": {"source": "tapahtumat.json"},
+    "answer_id": 15
+  },
+  {
+    "page_content": "Miten auton ikkunat toimivat sähköisesti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Miten auton ikkunat sähköisesti toimivat?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Millä tavoin auton ikkunoita voi avata ja sulkea sähköisesti?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Miten auton ikkunoiden säätö tapahtuu?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Kuinka avaat ja suljet auton ikkunat?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Millä tavoin auton ikkunoiden toiminta lukitaan?",     
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Miten ikkunat säädetään autossa ja mitä turvallisuustoimintoja löytyy?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Mitä katkaisijaa käytetään ikkunoiden avaamiseen ja sulkemiseen autossa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Miten estät takaistuimen matkustajia käyttämästä ikkunoita?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Millä periaatteella sähkötoimiset ikkunat toimivat autossa ja miten niiden toimintaa voi rajoittaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Miten auton ikkunoiden toiminta on toteutettu ja millaista turvallisuutta niissä on?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 16
+  },
+  {
+    "page_content": "Miten virtakytkin toimii?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Mitä tapahtuu, kun auton virtakytkin on OFF-asennossa, verrattuna ACC- ja ON-asentoihin?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Kuvaile virtakytkimen eri asentoja ja niiden vaikutuksia auton toimintoihin, mukaan lukien READY-tila.",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Miten auton järjestelmät reagoivat virtakytkimen eri asentoihin (OFF, ACC, ON) ja miten jarru vaikuttaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Miten virtalukko vaikuttaa auton käynnistämiseen ja mitä tapahtuu READY-tilassa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Kerro, miten auton sähköjärjestelmät toimivat eri virtalukon asennoissa ja mitä READY-tila tarkoittaa.",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Mitä toimintoja auto tukee OFF, ACC ja ON -asennoissa, ja mikä on jarrupolkimen rooli?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Selitä virtakytkimen rooli auton käynnistyksessä ja mitä tapahtuu, kun jarru painetaan.",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Mitä auton ominaisuuksia voi käyttää ACC-tilassa, ja mitä ON-tila mahdollistaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Mitä eroa on virtakytkimen asennoilla OFF, ACC ja ON, ja miten jarru liittyy tähän prosessiin?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Miten auton toiminta muuttuu virtakytkimen ja jarrujen käytön mukaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 17
+  },
+  {
+    "page_content": "Miten EV-kytkintä käytetään?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Mikä on EV-kytkimen ensisijainen toiminto autossa?",   
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Mitä tapahtuu, kun kuljettaja painaa EV-kytkintä?",    
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Miten EV-kytkin vaikuttaa ajoneuvon toimintaan?",      
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Millä tavalla EV-kytkin optimoi auton energiankäyttöä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Miten kuljettaja voi vaikuttaa ajoneuvonsa sähköiseen ajotapaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Mikä on EV-kytkimen tarkoitus ajoneuvon käytössä?",    
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Miten EV-kytkin hyödyttää kuljettajaa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Miten kuljettaja voi vaikuttaa auton liikkumiseen pelkällä sähköllä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Mitä EV-kytkin mahdollistaa autossa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Mitä toimenpiteitä kuljettaja voi tehdä, jotta sähköajoa voidaan maksimoida?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 18
+  },
+  {
+    "page_content": "Mitä tarkoittaa akun säästötilan katkaisin?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Mikä on hybridi auton päätoiminto, kun akku on vähissä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Mitä tapahtuu yleensä, kun hybridiauton akku saavuttaa tietyn varaustason?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Miksi hybridiautoissa on polttomoottori?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Millä tavalla polttomoottori osallistuu hybridiauton energianhallintaan?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Miten hybridiauto pyrkii pidentämään akun käyttöikää?",    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Milloin hybridiauton polttomoottori tyypillisesti käynnistyy ajon aikana?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Mikä on hybridi auton polttomoottorin ja sähkömoottorin suhde energian tuotannossa?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Miten hybridiauton järjestelmä tasapainottaa energian käyttöä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Mitä polttomoottori tekee hybridiautossa akun ollessa vähissä?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Mitä hybridiauton hallintajärjestelmä tekee akun virran hallitsemiseksi?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 19
+  },
+  {
+    "page_content": "Mitä tarkoittaa akun lataustilan katkaisin?",
+    "metadata": {"source": "question_data_test.json"},
+    "answer_id": 20
+  },
+  {
+    "page_content": "Miten hybridiauton akun lataaminen tapahtuu, kun auto on paikoillaan?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Millä tavalla sähkömoottori lataa ajoakkua hybridiautossa?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Mitä tapahtuu hybridiautossa, kun kuljettaja painaa kaasua ja auto ei ole liikkeessä?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Miten moottori toimii lataustoiminnossa hybridiautossa?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Millä tavoin hybridiauton ajoakku latautuu, kun auto on pysäköitynä?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Onko hybridiauton ajoakku ladattavissa paikoillaan ollessa? Jos on, miten se tapahtuu?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Miten hybridiauton latausjärjestelmä hyödyntää moottoria lataamaan akkua?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Mitä tekee hybridiauton moottori kun auto on paikoillaan ja akku on tyhjä?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Kuinka hybridiauton ajoakku latautuu pysähdyksissä ollessa?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  },
+  {
+    "page_content": "Miten hybridiauton akun lataaminen toimii, kun ajoneuvo ei liiku?",
+    "metadata": {
+      "source": "question_data_test.json"
+    },
+    "answer_id": 20
+  }
+]
