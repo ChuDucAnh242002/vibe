@@ -1,151 +1,137 @@
-## Project Structure
-- `.github/workflows`: Github Action workflow 
-  - `tests.yml`: Github Action CI pipeline
-- `src`: All the scripts of the backend and frontend
-  - `backend`: The backend of the project
-    - `app.py`: The main python file that the docker container will run, every modules are called in this file
-    - `Dockerfile`: Dockerfile will create the image in docker container which contains of all the installed packages and pre-trainded models
-    - `requirements.txt`: this text file contains all the required python packages for running the pre-trained models
-    - `.env.default`: This is a default template for .env file which will be created when running the application
-    - `local`: This contains all the modules and services for local application
-      - `audio.py`: The audio service which uses to record the user's voice
-      - `stt.py`: The speech to text service which transcribe user's voice to text
-      - `text_gen.py`: The text generation service uses language model to generate texts
-      - `tts.py`: The text to speech service which synthesize the generated text to voice output
-      - `ir_service.py`: The intent recognition service which recognize user's intention in the sentence
-      - `weather.py`: The weather service will provide the forecast of the weather in given location
-      - `yle.py`: The YLE News service will provide news of the user's given topic
-      - `cli.py`: The Command line service will run by the docker which runs the command line and provide all application's functionalities.
-- `test`: Contains all the test files
-- `docker-compose.yml`: This file run all the services in the backend and frontend
-- `download_models.py`: This file download all the AI models for STT, TTS, and LLM
-- `run.sh`: The bashscript used to download required dependencies and run the application
+# SLT-VIBE
 
-## Quickstart with Bash
+SLT-VIBE is a locally run assistant with a terminal interface and local speech and language models. Its current runtime can capture and transcribe audio, generate text from typed prompts, synthesize speech, and index PDF documents in a Chroma database. The all-in-one spoken conversation flow is not fully wired up yet; see [Known limitations](#known-limitations).
 
-Before running the application, create .env file and copy the .env.default content to .env in the same folder. 
-Add YLE_APP_ID and YLE_APP_KEY.
+## Features
 
-Run run.sh file to download all necessary packages and run docker. 
+- Record audio and transcribe speech locally with a Finnish Wav2Vec2 model.
+- Generate responses with a local Gemma GGUF model.
+- Speak generated responses with Piper TTS.
+- Use individual speech-to-text, text-generation, text-to-speech, and audio-device options from the terminal menu.
+- Index PDF content into a persistent Chroma vector database for retrieval-augmented responses.
+- Store and retrieve sample question-and-answer data through Chroma.
 
-```bash
-./run.sh
+The repository also contains intent recognition, weather, YLE news, a standalone question-answering model, and conversation summarization modules. These are not currently initialized by the application at startup, so their corresponding menu options and integrations are not available in the default run. The `--web` flag is also not a functioning web server yet.
+
+## Project structure
+
+```text
+.
+├── .github/workflows/       CI workflow for formatting and tests
+├── doc/                     Benchmark results
+├── documents/               Sample PDFs and question/answer JSON data
+├── src/backend/
+│   ├── app.py               Application startup and service orchestration
+│   ├── Dockerfile           Backend image definition
+│   ├── .env.default         Default runtime configuration
+│   ├── requirements.txt     Backend Python dependencies
+│   └── local/
+│       ├── audio.py         Microphone and audio-device handling
+│       ├── stt.py           Speech-to-text
+│       ├── text_gen.py      Local Gemma text generation
+│       ├── tts.py           Piper text-to-speech
+│       ├── chroma.py        PDF indexing and vector retrieval
+│       ├── question.py      Standalone question-answering model
+│       ├── context_manager.py Conversation summarization
+│       ├── ir_service.py    Finnish intent recognition and routing
+│       ├── intents/         Finnish intent definitions
+│       ├── weather.py       Weather API integration
+│       ├── yle.py           YLE Teletext/news integration
+│       ├── baseform.py      Finnish word base-form handling
+│       └── constants.py     Shared service and application constants
+├── test/                    Python tests
+├── docker-compose.yml       Container configuration and mounted data
+├── download_models.py       Downloads the local models
+└── run.sh                   Interactive setup, run, and test helper
 ```
 
-## Quickstart with Docker
+## Requirements
 
-Run download_models.py to download STT/TSS/LLM models to correct folders.
+- Python 3.9 for a local installation, or Docker with Docker Compose.
+- Linux is the documented/tested target. Audio use requires working host audio devices; PipeWire is used by the Docker image.
+- Several large model files are downloaded before the first run. Ensure sufficient disk space and network access.
+- For a local Linux install, PortAudio and SoX are required by the audio stack. The Docker image installs these system packages itself.
 
-Make sure Pipewire is installed and running on Linux.
+## Run with Docker
 
-Install Sox on Linux for efficient audio manipulation (changing sample rates)
+Download the models from the repository root:
 
-Before running the application, create .env file and copy the .env.default content to .env in the same folder. 
-Add YLE_APP_ID and YLE_APP_KEY.
+```bash
+python3 download_models.py
+```
 
-Ensure Docker is installed. In order to run the application, execute the following commands:
+Build and start the interactive application:
 
 ```bash
 docker compose build
 docker compose run --rm --service-ports app
 ```
 
-You can try running "sudo modprobe uinput" if there's problems, delete this line if not needed
+The Compose service mounts `models/`, `documents/`, `chroma_data/`, and `logs/` from the project directory. On Linux, the container also needs access to the host's sound devices, as configured in `docker-compose.yml`.
 
-## Run Docker CLI
+## Run locally
 
-Ensure that docker image was built by execute this command:
-
-```bash
-docker images
-```
-
-Run the image with the image id or name, execute this command:
+Create and activate a virtual environment:
 
 ```bash
-docker run -it image_name
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-To go inside docker shell, execute this command:
-
-```bash
-docker run -it image_name /bin/bash
-```
-
-## Run Docker CLI with performance recording
-
-Note that starting and stopping the application takes time due to logging processes
-
-```bash
-docker compose run --rm --service-ports  \
-  --volume /tmp/perf_data:/perf_data \
-  --entrypoint perf \
-  app \
-  record -F 100 --call-graph dwarf \
-  --output /perf_data/perf.data \
-  -- python app.py --cli
-```
-
-Perf data is saved to host's /tmp/perf_data/perf.data file and it can be analysed with hotspot
-```bash
-sudo chown $USER:$USER /tmp/perf_data/perf.data
-sudo apt install hotspot
-hotspot /tmp/perf_data/perf.data 
-```
-
-### Local Installation
-
-_Prerequisites:_ Python 3.9 & Pip
-
-#### Environment Setup
-
-Create a virtual environment:
-
-```bash
-python -m venv env
-```
-
-- On Linux/Mac, activate the environment with:
-
-```bash
-source env/bin/activate
-```
-
-- On Windows, activate the environment with:
-
-```bash
-.\env\Scripts\activate
-```
-
-- On git bash, activate the environment with:
-
-```bash
-source env/Scripts/activate
-```
-
-#### Run the application
-
-Firstly, run the download_models.py to download all the models.
-
-```bash
-python download_models.py
-```
-
-Next, install the required python dependencies of backend using:
+Install backend dependencies, download the models, and start the CLI:
 
 ```bash
 pip install -r src/backend/requirements.txt
-```
-
-Before running the application, create .env file and copy the .env.default content to .env in the same folder. 
-Add YLE_APP_ID and YLE_APP_KEY.
-
-Run the app.py with command line service option.
-
-```bash
+python download_models.py
+mkdir -p logs
 python src/backend/app.py --cli
 ```
 
-#### Track the log to debug
+The application creates `src/backend/.env` from `src/backend/.env.default` on first startup. Review that file to configure audio device names or model settings. YLE credentials are only relevant if the currently inactive YLE service is enabled.
 
-There is a vibe.log file that will be created when the application run locally. 
+## Using the CLI
+
+The menu provides these operations:
+
+- **2**: Record and transcribe speech.
+- **3**: Enter text for local language-model generation.
+- **4**: Enter text to synthesize speech.
+- **9**: Enter a PDF filename from `documents/` to index it in Chroma.
+- **0**: Select audio input and output devices.
+- **q**: Exit.
+
+For recording, press **F12** to start and press it again to stop. Press **Esc** to return from the recording screen. Options **1**, **5**, **6**, **7**, and **8** depend on services that are not currently wired into startup; see [Known limitations](#known-limitations).
+
+## `run.sh` helper
+
+`run.sh` opens an interactive menu; it does not automatically install everything and start the assistant. Its choices let you install Docker, install test dependencies, download models, build or run the container, and run tests or tests with coverage. For the normal Docker workflow, select model download, build, and run in that order.
+
+## Run tests
+
+Install test dependencies if needed, then run:
+
+```bash
+pip install -r test/requirements.txt
+pytest test
+```
+
+Run tests with coverage:
+
+```bash
+pytest --cov=. --cov-report=term --cov-report=xml --cov-config=.coveragerc test
+```
+
+## Data and logs
+
+- User-provided PDFs should be placed in `documents/`; the CLI's document option accepts a filename from that directory.
+- Sample question and answer data is in `documents/question_data*.json` and `documents/answer_data*.json`.
+- Downloaded models are stored in `models/`.
+- Application logs are written to `logs/`.
+- Chroma persistence is stored in `chroma_data/` when using Docker Compose. In a local run, the Chroma client uses a relative `chroma_db/` directory.
+
+## Known limitations
+
+- Intent recognition, weather, YLE news, the standalone question-answering model, and conversation summarization exist in source but are commented out in application service initialization.
+- The application does not currently expose a web interface, even though `app.py` accepts a `--web` option.
+- The all-in-one spoken conversation flow (menu option 1 or 8) currently calls intent recognition, but that service is not initialized at startup. Use the individual menu options instead.
+- Document retrieval and the optional question-answer data paths are still under development; behavior depends on the selected Chroma collection and data that has been indexed.
