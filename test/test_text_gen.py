@@ -66,6 +66,25 @@ class TestTextGenService:
             )  # This is a placeholder, the actual input can be decided later
             assert result is not None
 
+    def test_context_is_in_user_turn(self):
+        self.text_gen_service.generate("question", "retrieved context")
+        messages = (
+            self.text_gen_service.llm_model.create_chat_completion.call_args.kwargs[
+                "messages"
+            ]
+        )
+        assert messages == [
+            {"role": "user", "content": "Context:\nretrieved context\n\nquestion"}
+        ]
+
+    def test_generation_failure_propagates(self):
+        with patch.object(
+            self.text_gen_service.llm_model,
+            "create_chat_completion",
+            side_effect=RuntimeError("model failed"),
+        ), pytest.raises(RuntimeError, match="model failed"):
+            self.text_gen_service.generate("question")
+
     # Checks that the response time is less than 5 seconds
     # Applicable when the llama.cpp is not mocked
     @pytest.mark.skip()

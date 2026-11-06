@@ -11,16 +11,11 @@ from local.constants import Srv
 from local.constants import APP_LOG_FILE
 from dotenv import load_dotenv
 from local.cli import CommandLineService
-from local.ir_service import IrService
 from local.text_gen import TextGenService
 from local.chroma import ChromaService
-from local.context_manager import ContextManager
 from local.tts import TextToSpeech
 from local.audio import AudioService
 from local.stt import SpeechToTextService
-from local.weather import Weather
-from local.yle import YleNewsApi
-from local.baseform import Baseform
 from local.question import QuestionAnsweringService
 
 
@@ -44,6 +39,7 @@ class AppManager:
             self.LOG_PATH = os.path.join(self.root, "logs")
 
         self.logger = logging.getLogger(__name__)
+        os.makedirs(self.LOG_PATH, exist_ok=True)
         logfile_name = f"{APP_LOG_FILE}_{time.strftime('%Y%m%d_%H%M')}.log"
 
         logging.basicConfig(
@@ -52,7 +48,8 @@ class AppManager:
             style="{",
             datefmt="%Y-%m-%d %H:%M:%S",
             handlers=[
-                logging.FileHandler(os.path.join(self.LOG_PATH, logfile_name), mode="w")
+                logging.FileHandler(os.path.join(self.LOG_PATH, logfile_name), mode="w"),
+                logging.StreamHandler(),
             ],
         )
         self.logger.info(f"APP start")
@@ -83,6 +80,7 @@ class AppManager:
         }
 
         self._setup_env()
+        self.audio_enabled = os.getenv("ENABLE_AUDIO", "true").lower() == "true"
         self._load_services()
 
     def toggle_recording(self, all, silent=False):
@@ -97,7 +95,7 @@ class AppManager:
         if self.services[Srv.AUDIO].is_recording:
             audio_data = self.services[Srv.AUDIO].stop_recording()
             if audio_data is not None:
-                self._process_recording_qa_pair(audio_data, all)
+                self._process_recording(audio_data, all, silent)
             elif self.args.cli:
                 self.services[Srv.CLI].print_text("No audio recorded.")
 
@@ -135,6 +133,9 @@ class AppManager:
             self.services[Srv.CLI].print_text(f"Audio text: {audio_text}")
 
         if all:
+            if self.services[Srv.IR] is None:
+                self.text_gen(audio_text, True, silent)
+                return
             intent = self.services[Srv.IR].recognize_intent(audio_text)
 
             # Intent is recognized, handle it
@@ -175,7 +176,7 @@ class AppManager:
 
             self.logger.info("Successfully update input/output device indexes")
         except Exception as e:
-            self.logger.error("Failed to update input/output device indexes")
+            self.logger.exception("Failed to update input/output device indexes: %s", e)
 
     def retrieve_qa_pair(self, question:str):
         """
@@ -190,6 +191,7 @@ class AppManager:
             self.logger.info("Successfully retrieve QA pair")
         except Exception as e:
             self.logger.error(f"Failed to retrieve QA pair to ChromaDB: {e}")
+            self.services[Srv.CLI].print_text(f"Failed to retrieve QA pair: {e}")
 
     def retrieve_qa(self, question: str):
         """
@@ -200,37 +202,31 @@ class AppManager:
 
         try:
             context = self.services[Srv.RAG].retrieve_similar_entries(question)
+            if self.services[Srv.QA] is None:
+                self.services[Srv.QA] = QuestionAnsweringService(self.root)
             answer = self.services[Srv.QA].retrieve_answer(question, context)
 
             self.services[Srv.CLI].print_text(answer)
             self.logger.info("Successfully retrieve answer from Question Answering model")
         except Exception as e:
-            self.logger.error(f"Failed to get the answer from Question Answering model")
-
+            self.logger.exception("Failed to get the answer from Question Answering model")
+            self.services[Srv.CLI].print_text(f"Question answering failed: {e}")
 
     def read_pdf(self, file_name):
         """
         Read the pdf and store to ChromaDB
         """
-        if(file_name.strip() == "qa"):
-            try:
-                self.services[Srv.RAG].add_qa_pair()
-                self.logger.info("Successfully add QA pair to ChromaDB")
-            except:
-                self.logger.error(f"Failed to add QA pair to ChromaDB: {e}")
-
-        if(file_name.strip() == "qa_test"):
-            try:
-                self.services[Srv.RAG].add_qa_pair()
-                self.logger.info("Successfully add QA pair to ChromaDB")
-            except:
-                self.logger.error(f"Failed to add QA pair to ChromaDB: {e}")
-        else:
-            try:
+        file_name = file_name.strip()
+        try:
+            if file_name in ("qa", "qa_test"):
+                self.services[Srv.RAG].add_qa_pair(file_name)
+                self.logger.info("Successfully added QA pairs to ChromaDB")
+            else:
                 self.services[Srv.RAG].save_pdf_to_db(file_name)
                 self.logger.info("Successfully read pdf to ChromaDB")
-            except Exception as e:
-                self.logger.error(f"Failed to read pdf to ChromaDB: {e}")
+        except Exception as e:
+            self.logger.exception("Failed to import data into ChromaDB")
+            self.services[Srv.CLI].print_text(f"Import failed: {e}")
 
     def exit_and_save(self):
         """
@@ -239,24 +235,28 @@ class AppManager:
         if self.services[Srv.CLI]:
             self.services[Srv.CLI].print_text("Saving context and exiting the program.")
 
+        if self.services[Srv.CONTEXT_MANAGER] is None:
+            self.services[Srv.CLI].print_text(
+                "Conversation saving is unavailable: summarization is not enabled. Use q to exit."
+            )
+            return
         context_from_conversation = self.services[Srv.CONTEXT_MANAGER].summarizer()
         self.services[Srv.RAG].save_to_db(context_from_conversation)
 
-        self.services[Srv.AUDIO].terminate_audio()
-        self.services[Srv.TTS].stop()
-        self.logger.info(f"APP shutdown at {time.asctime()}")
-        sys.exit(0)
+        self.exit()
 
-    def exit(self):
+    def exit(self, code=0):
         """
         Exit the program gracefully with cleanup
         """
         if self.services[Srv.CLI]:
             self.services[Srv.CLI].print_text("Exiting the program.")
-        self.services[Srv.AUDIO].terminate_audio()
-        self.services[Srv.TTS].stop()
+        if self.services[Srv.AUDIO] is not None:
+            self.services[Srv.AUDIO].terminate_audio()
+        if self.services[Srv.TTS] is not None:
+            self.services[Srv.TTS].stop()
         self.logger.info(f"APP shutdown")
-        sys.exit(0)
+        sys.exit(code)
 
     def run(self):
         """
@@ -278,11 +278,11 @@ class AppManager:
             self.services[Srv.CLI] = CommandLineService(self)
             self.services[Srv.CLI].display_cli()
             self.exit()
-        except Exception as e:
-            self.logger.error(
-                f"[_run_cli] Error while running CLI service: {e} at line {e.lineno}"
-            )
+        except EOFError:
             self.exit()
+        except Exception:
+            self.logger.exception("Error while running CLI service")
+            self.exit(1)
 
     def speech_to_text(self, audio) -> str:
         """
@@ -335,6 +335,8 @@ class AppManager:
         """
         self.logger.info("PERF : [text_gen] Generating text")
         context = self.services[Srv.RAG].retrieve_similar_entries(input_text)
+        if self.services[Srv.TEXT_GEN] is None:
+            self.services[Srv.TEXT_GEN] = TextGenService(self.root)
 
         # print("\nContext:", context, "\n")
 
@@ -343,7 +345,8 @@ class AppManager:
             full_text = "".join(
                 token["choices"][0]["delta"].get("content", "") for token in llm_output
             ).strip()
-            self.services[Srv.TTS].synthesize(full_text)
+            if synthesize:
+                self.services[Srv.TTS].synthesize(full_text)
 
             # self.services[Srv.CONTEXT_MANAGER].messages.extend(
             #     [
@@ -375,6 +378,8 @@ class AppManager:
             #     ]
             # )
             self.services[Srv.CLI].print_separator()
+            if synthesize and sentence.strip():
+                self.services[Srv.TTS].synthesize(sentence.strip())
 
         self.logger.info("PERF : [text_gen] Done generating text")
         return
@@ -403,71 +408,16 @@ class AppManager:
         """
 
         try:
-            self.services[Srv.AUDIO] = AudioService(self)
-        except Exception as e:
-            self.logger.error(f"Failed to load audio service: {e}")
-            self.exit()
-
-        try:
-            self.services[Srv.STT] = SpeechToTextService(self.root)
-        except Exception as e:
-            self.logger.error(f"Failed to load stt service: {e}")
-            self.exit()
-
-        try:
-            self.services[Srv.TTS] = TextToSpeech(
-                self.root, device_index=self.services[Srv.AUDIO].output_device_index
-            )
-        except Exception as e:
-            self.logger.error(f"Failed to load tts service: {e}")
-            self.exit()
-
-        try:
-            self.services[Srv.TEXT_GEN] = TextGenService(self.root)
-        except Exception as e:
-            self.logger.error(f"Failed to load text gen service: {e}")
-            self.exit()
-
-        try:
+            if self.audio_enabled:
+                self.services[Srv.AUDIO] = AudioService(self)
+                self.services[Srv.STT] = SpeechToTextService(self.root)
+                self.services[Srv.TTS] = TextToSpeech(
+                    self.root, device_index=self.services[Srv.AUDIO].output_device_index
+                )
             self.services[Srv.RAG] = ChromaService(self.root)
-        except Exception as e:
-            self.logger.error(f"Failed to load rag service: {e}")
-            self.exit()
-
-        # try:
-        #     self.services[Srv.CONTEXT_MANAGER] = ContextManager(self.root)
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load text context management service: {e}")
-        #     self.exit()
-
-        # try:
-        #     self.services[Srv.IR] = IrService(self)
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load ir service: {e}")
-        #     self.exit()
-
-        # try:
-        #     self.services[Srv.WEATHER] = Weather()
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load weather service: {e}")
-        #     self.exit()
-        # try:
-        #     self.services[Srv.NEWS] = YleNewsApi(self)
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load yle news service: {e}")
-        #     self.exit()
-
-        # try:
-        #     self.services[Srv.BASEFORM] = Baseform()
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load baseform service: {e}")
-        #     self.exit()
-
-        # try:
-        #     self.services[Srv.QA] = QuestionAnsweringService(self.root)
-        # except Exception as e:
-        #     self.logger.error(f"Failed to load question answering service {e}")
-        #     self.exit()
+        except Exception:
+            self.logger.exception("Failed to load application services")
+            self.exit(1)
 
     def _setup_env(self):
         """
@@ -484,6 +434,25 @@ class AppManager:
 
         self.logger.info(f"env path: {self.ENV_PATH}")
         self.logger.info(f"loading env, result: {load_dotenv(env_file_path)}")
+        load_dotenv(os.path.join(self.ENV_PATH, ".env.default"))
+        legacy_model_settings = {
+            "EMBEDDING_MODEL": (
+                "sentence-transformers/all-MiniLM-L12-v2",
+                "sbert-cased-finnish-paraphrase",
+            ),
+            "QUESTION_ANSWERING_MODEL": (
+                "TurkuNLP/bert-base-finnish-cased-squad2",
+                "bert-base-finnish-cased-squad2",
+            ),
+        }
+        for setting, (old_value, local_value) in legacy_model_settings.items():
+            if os.getenv(setting) == old_value:
+                self.logger.warning(
+                    "Replacing legacy remote model setting %s with bundled local model %s",
+                    setting,
+                    local_value,
+                )
+                os.environ[setting] = local_value
 
     def _create_env_file(self):
         """
@@ -497,12 +466,15 @@ class AppManager:
 
         except IOError as e:
             self.logger.error(f"Error writing to .env file ({self.ENV_PATH}): {e}")
+            raise
         except OSError as e:
             self.logger.error(f"OS Error writing to .env file ({self.ENV_PATH}): {e}")
+            raise
         except Exception as e:
             self.logger.error(
                 f"An unexpected error occurred while writing to .env: {e}"
             )
+            raise
 
     def _find_project_root(self) -> Path:
         """
@@ -516,8 +488,8 @@ class AppManager:
         while True:
             if (current_path / "README.md").exists():
                 return current_path
-            elif current_path == "/":
-                return None
+            elif current_path == current_path.parent:
+                raise FileNotFoundError("Cannot locate the VIBE project root")
             else:
                 current_path = current_path.parent
 

@@ -1,3 +1,4 @@
+import os
 import pytest
 from unittest.mock import MagicMock, patch
 from pathlib import Path
@@ -15,6 +16,7 @@ with patch.dict(
         "numpy": MagicMock(),
         "hassil": MagicMock(),
         "local.text_gen": MagicMock(),
+        "local.chroma": MagicMock(),
         "sox": MagicMock(),
         "onnxruntime": MagicMock(),
         "transformers": MagicMock(),
@@ -34,7 +36,10 @@ with patch.dict(
         "sklearn.metrics.pairwise": MagicMock(),
     },
 ):
-    from src.backend.app import AppManager
+    import importlib
+
+    app_module = importlib.import_module("src.backend.app")
+    AppManager = app_module.AppManager
 
 
 class TestAppManager:
@@ -46,9 +51,13 @@ class TestAppManager:
         """
         Setup method to run before each test
         """
-        with patch("argparse.ArgumentParser", return_value=MagicMock()), patch.object(
+        with patch("os.makedirs"), patch(
+            "argparse.ArgumentParser", return_value=MagicMock()
+        ), patch.object(
             AppManager, "_find_project_root", return_value="/mock/root/"
-        ), patch.object(AppManager, "_setup_env", return_value=None), patch.object(
+        ), patch.object(
+            AppManager, "_setup_env", return_value=None
+        ), patch.object(
             AppManager, "_load_services", return_value=None
         ):
             self.app = AppManager()
@@ -191,62 +200,26 @@ class TestAppManager:
             assert self.app.services[Srv.CLI].display_cli.called
             assert self.app.exit.called
 
-    @pytest.mark.skip()
     @pytest.mark.unit()
-    def test_load_services_try(self):
-        """
-        Test the loading of services.
-        """
-        with patch(
-            "local.audio.AudioService", return_value=MagicMock()
-        ) as mock_audio, patch(
-            "local.stt.SpeechToTextService", return_value=MagicMock()
-        ) as mock_stt, patch(
-            "local.tts.TextToSpeech", return_value=MagicMock()
-        ) as mock_tts, patch(
-            "local.text_gen.TextGenService", return_value=MagicMock()
-        ) as mock_text_gen, patch(
-            "local.ir_service.IrService", return_value=MagicMock()
-        ) as mock_ir, patch(
-            "local.weather.Weather", return_value=MagicMock()
-        ) as mock_weather, patch(
-            "local.yle.YleNewsApi", return_value=MagicMock()
-        ) as mock_news:
+    def test_load_services_without_audio(self):
+        self.app.audio_enabled = False
+        with patch.object(app_module, "AudioService") as mock_audio, patch.object(
+            app_module, "ChromaService"
+        ) as mock_chroma:
             self.app._load_services()
-
-            # Assert that the services are correctly assigned
-            assert self.app.services[Srv.AUDIO] == mock_audio.return_value
-            assert self.app.services[Srv.STT] == mock_stt.return_value
-            assert self.app.services[Srv.TTS] == mock_tts.return_value
-            assert self.app.services[Srv.TEXT_GEN] == mock_text_gen.return_value
-            assert self.app.services[Srv.IR] == mock_ir.return_value
-            assert self.app.services[Srv.WEATHER] == mock_weather.return_value
-            assert self.app.services[Srv.NEWS] == mock_news.return_value
+        mock_audio.assert_not_called()
+        mock_chroma.assert_called_once_with(self.app.root)
+        assert self.app.services[Srv.RAG] == mock_chroma.return_value
 
     @pytest.mark.unit()
-    @pytest.mark.parametrize(
-        "service",
-        [
-            "audio.AudioService",
-            "stt.SpeechToTextService",
-            "tts.TextToSpeech",
-            # "text_gen.TextGenService",
-            "ir_service.IrService",
-            "weather.Weather",
-            "yle.YleNewsApi",
-        ],
-    )
-    def test_load_services_except(self, service):
-        """
-        Test the loading of services with exceptions.
-        """
-        service_str = "local." + service
-        with patch(service_str, side_effect=Exception), patch.object(
-            self.app, "exit", return_value=None
-        ), patch.object(self.app.logger, "error", return_value=None):
+    def test_load_services_reports_error(self):
+        self.app.audio_enabled = False
+        with patch.object(
+            app_module, "ChromaService", side_effect=RuntimeError("load failed")
+        ), patch.object(self.app, "exit", return_value=None) as mock_exit:
             self.app._load_services()
-            assert self.app.logger.error.called
-            assert self.app.exit.called
+        assert self.app.logger.exception.called
+        mock_exit.assert_called_once_with(1)
 
     @pytest.mark.unit()
     def test_setup_env(self):
@@ -258,6 +231,24 @@ class TestAppManager:
         ):
             self.app._setup_env()
             assert self.app._create_env_file.called
+
+    @pytest.mark.unit()
+    def test_setup_env_migrates_bundled_model_paths(self):
+        with patch.dict(
+            os.environ,
+            {
+                "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L12-v2",
+                "QUESTION_ANSWERING_MODEL": "TurkuNLP/bert-base-finnish-cased-squad2",
+            },
+        ), patch("os.path.exists", return_value=True), patch.object(
+            app_module, "load_dotenv", return_value=True
+        ):
+            self.app._setup_env()
+            assert os.environ["EMBEDDING_MODEL"] == "sbert-cased-finnish-paraphrase"
+            assert (
+                os.environ["QUESTION_ANSWERING_MODEL"]
+                == "bert-base-finnish-cased-squad2"
+            )
 
     @pytest.mark.unit()
     def test_find_project_root(self):

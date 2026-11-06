@@ -139,16 +139,22 @@ class CommandLineService:
             print(self.term.ljust("5: Only intent recognition service"))
             print(self.term.ljust("6: Only QA pair service"))
             print(self.term.ljust("7: Only Question Answering model"))
-            print(self.term.ljust("8: All services silent mode"))
+            print(self.term.ljust("8: All services silent mode (requires audio)"))
             print(self.term.ljust("9: Add document to ChromaDB"))
             print(self.term.ljust("0: Adjust audio input/output devices"))
 
             command_input = input(
                 self.term.ljust(
-                    "Choose service (from 0 to 8), (q)uit or (s)ave and exit:"
+                    "Choose service (from 0 to 9), (q)uit or (s)ave and exit:"
                 )
             ).strip()
 
+            if command_input in ("0", "1", "2", "4", "8") and not self.app.audio_enabled:
+                self.print_text("Audio is disabled. Start with docker-compose.audio.yml to use speech.")
+                continue
+            if command_input == "5" and self.app.get_service(Srv.IR) is None:
+                self.print_text("Intent recognition is not enabled.")
+                continue
             if command_input == "q" or command_input == "quit":
                 self.app.exit()
             if command_input == "s" or command_input == "save":
@@ -270,7 +276,7 @@ class CommandLineService:
         Query text input from user for reading pdf.
         """
         self._input_from_user(
-            f"Write the pdf file name or '(b)ack': ",
+            f"Write a PDF filename, 'qa', 'qa_test', or '(b)ack': ",
             self.app.read_pdf
         )
 

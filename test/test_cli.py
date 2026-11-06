@@ -182,7 +182,7 @@ class TestCommandLineService:
 
             mock_flush.assert_called_once()
             mock_toggle_recording.assert_called_once_with(all_services, False)
-            mock_exit.assert_called_once()
+            mock_exit.assert_not_called()
 
     @pytest.mark.unit()
     @pytest.mark.parametrize(
