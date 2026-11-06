@@ -1,6 +1,6 @@
 # SLT-VIBE
 
-SLT-VIBE is a locally run assistant with a terminal interface and local speech and language models. Its current runtime can capture and transcribe audio, generate text from typed prompts, synthesize speech, and index PDF documents in a Chroma database. The all-in-one spoken conversation flow is not fully wired up yet; see [Known limitations](#known-limitations).
+SLT-VIBE is a locally run assistant with a terminal interface and local speech and language models. It can generate text with Gemma, answer using imported question/answer pairs, answer questions about indexed PDFs, and optionally capture and synthesize speech.
 
 ## Features
 
@@ -54,20 +54,34 @@ The repository also contains intent recognition, weather, YLE news, a standalone
 
 ## Run with Docker
 
-Download the models from the repository root:
+Run these commands from the repository root, in order. **Step 2 is the model download command**: it downloads Gemma and the Finnish question-pair/PDF models into the host `models/` folder through the Docker volume mount. It does not download the optional speech models.
 
+1. Prepare the data folders and build the image:
 ```bash
-python3 download_models.py
-```
-
-Build and start the interactive application:
-
-```bash
+mkdir -p models documents chroma_data logs
 docker compose build
-docker compose run --rm --service-ports app
 ```
 
-The Compose service mounts `models/`, `documents/`, `chroma_data/`, and `logs/` from the project directory. On Linux, the container also needs access to the host's sound devices, as configured in `docker-compose.yml`.
+2. Download the models needed for text chat and question answering:
+```bash
+docker compose run --rm --no-deps app python download_models.py --text-only --output-dir /models
+```
+
+3. Start the application:
+```bash
+docker compose run --rm app
+```
+
+Choose **3** to chat with Gemma. To use the question-pair retriever, choose **9**, enter `qa` (or `qa_test` for the test data), then choose **6** to ask questions. To answer questions about a PDF, choose **9** and enter its filename, then choose **7**. The first PDF question loads the Finnish QA model.
+
+To also use speech, download the speech models and enable host audio access (the downloader skips already downloaded model files):
+
+```bash
+docker compose run --rm --no-deps app python download_models.py --output-dir /models
+docker compose -f docker-compose.yml -f docker-compose.audio.yml run --rm app
+```
+
+Audio mode requires Linux and usable `/dev/snd` devices. The text-only configuration does not request privileged access or expose unused ports. Both modes persist models, documents, Chroma data, and logs in the corresponding project directories.
 
 ## Run locally
 
@@ -104,7 +118,7 @@ For recording, press **F12** to start and press it again to stop. Press **Esc** 
 
 ## `run.sh` helper
 
-`run.sh` opens an interactive menu; it does not automatically install everything and start the assistant. Its choices let you install Docker, install test dependencies, download models, build or run the container, and run tests or tests with coverage. For the normal Docker workflow, select model download, build, and run in that order.
+`run.sh` opens an interactive menu; it does not automatically install everything and start the assistant. Build the image first, then select model download and run. The downloader runs in Docker and writes to the mounted `models/` directory.
 
 ## Run tests
 
@@ -127,11 +141,10 @@ pytest --cov=. --cov-report=term --cov-report=xml --cov-config=.coveragerc test
 - Sample question and answer data is in `documents/question_data*.json` and `documents/answer_data*.json`.
 - Downloaded models are stored in `models/`.
 - Application logs are written to `logs/`.
-- Chroma persistence is stored in `chroma_data/` when using Docker Compose. In a local run, the Chroma client uses a relative `chroma_db/` directory.
+- Chroma persistence is stored in `chroma_data/` when using Docker Compose and in `chroma_db/` for a local run.
 
 ## Known limitations
 
-- Intent recognition, weather, YLE news, the standalone question-answering model, and conversation summarization exist in source but are commented out in application service initialization.
 - The application does not currently expose a web interface, even though `app.py` accepts a `--web` option.
-- The all-in-one spoken conversation flow (menu option 1 or 8) currently calls intent recognition, but that service is not initialized at startup. Use the individual menu options instead.
-- Document retrieval and the optional question-answer data paths are still under development; behavior depends on the selected Chroma collection and data that has been indexed.
+- Intent recognition, weather, YLE news, and conversation summarization are not enabled at startup. Spoken requests use Gemma; the audio workflow requires the optional audio Compose file and speech models.
+- PDF answers require a readable PDF indexed through menu option 9. Question-pair data is imported into the persistent Chroma database the first time `qa` or `qa_test` is selected.

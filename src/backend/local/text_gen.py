@@ -1,10 +1,6 @@
-import sys
 import os
 from llama_cpp import Llama
 from abstract_classes import TextGenerationInterface
-
-# Suppress warnings from console output
-sys.stderr = open(os.devnull, "w")
 
 
 class TextGenService(TextGenerationInterface):
@@ -52,7 +48,7 @@ class TextGenService(TextGenerationInterface):
         self.llm_model = Llama(
             model_path=text_generation_path,
             chat_format="gemma",
-            verbose=True,
+            verbose=False,
             n_ctx=4096,
             n_threads=6,
         )
@@ -66,29 +62,21 @@ class TextGenService(TextGenerationInterface):
 
         :return generator generator: The service generated output
         """
-        print(f"Context: {context}")
         messages = [
             {
-                "role": "assistant",
-                "content": context
-            },
-            {
                 "role": "user",
-                "content": user_input,
+                "content": (
+                    f"Context:\n{context}\n\n{user_input}" if context else user_input
+                ),
             },
         ]
 
-        try:
-            generator = self.llm_model.create_chat_completion(
-                messages=messages,
-                max_tokens=self.max_new_tokens,
-                temperature=self.temperature,
-                top_p=self.top_p,
-                top_k=self.top_k,
-                stream=True,
-                repeat_penalty=self.repeat_penalty,
-            )
-            return generator
-
-        except Exception as e:
-            return f"Error in chat generation: {e}"
+        return self.llm_model.create_chat_completion(
+            messages=messages,
+            max_tokens=self.max_new_tokens,
+            temperature=self.temperature if self.do_sample else 0.0,
+            top_p=self.top_p,
+            top_k=self.top_k,
+            stream=True,
+            repeat_penalty=self.repeat_penalty,
+        )

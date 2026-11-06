@@ -2,10 +2,11 @@
 
 # Quick start with bash
 
-Install all the packages by running run.sh
+Install the backend and test requirements locally.
 
 ```bash
-./run.sh
+pip install -r src/backend/requirements.txt
+pip install -r test/requirements.txt
 ```
 
 Then run all the tests using pytest
@@ -16,7 +17,7 @@ pytest
 or
 
 ```bash
-pytest tests
+pytest test
 ```
 
 # Run tests by mark
@@ -38,5 +39,5 @@ First install all test's packages requirements.
 Recommend to install packages in virtual environment
 ```bash
 sudo apt install portaudio19-dev
-pip install -r tests/requirements.txt
+pip install -r test/requirements.txt
 ```
