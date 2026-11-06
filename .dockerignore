@@ -4,3 +4,12 @@
 .github/
 doc/
 logs/
+.git/
+models/
+chroma_data/
+chroma_db/
+documents/
+test/
+__pycache__/
+**/__pycache__/
+**/.env

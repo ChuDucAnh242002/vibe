@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+cd "$(dirname "$0")"
+
 # Define color codes
 RED="\e[31m"
 GREEN="\e[32m"
@@ -92,7 +95,8 @@ install_portaudio() {
 
 download_models() {
     echo -e "${CYAN}Dowloading models from Huggingface...${RESET}"
-    python download_models.py
+    mkdir -p models documents chroma_data logs
+    docker compose run --rm --no-deps app python download_models.py --text-only --output-dir /models
 }
 
 build_application() {
@@ -102,7 +106,8 @@ build_application() {
 
 run_application() {
     echo -e "${CYAN}Running the application using Docker Compose...${RESET}"
-    docker compose run --rm --service-ports app
+    mkdir -p models documents chroma_data logs
+    docker compose run --rm app
 }
 
 run_test() {
@@ -119,14 +124,14 @@ while true; do
     echo -e "\n${CYAN}Select an option:${RESET}"
     echo -e "1) Install Docker"
     echo -e "2) Install Requirements for testing"
-    echo -e "3) Download models"
+    echo -e "3) Download text models (build the image first; prepares models/)"
     echo -e "4) Build application"
     echo -e "5) Run application"
     echo -e "6) Run tests"
     echo -e "7) Run tests with coverage"
     echo -e "8) Exit"
 
-    read -p "Enter your choice (1-8): " choice
+    read -r -p "Enter your choice (1-8): " choice || exit 0
 
     case $choice in
         1)
@@ -148,7 +153,7 @@ while true; do
             exit 0
             ;;
         *)
-            echo -e "${RED}Invalid choice! Please enter a valid number (1-4).${RESET}"
+            echo -e "${RED}Invalid choice! Please enter a valid number (1-8).${RESET}"
             sleep 1
             ;;
     esac

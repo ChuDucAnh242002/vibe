@@ -1,21 +1,19 @@
 services:
   app:
-    build: ./src/backend
-    image: vibe-app-image:latest # Specify the custom image name and tag
-    container_name: vibe-app-container
-    ports:
-      - "5000:5000"
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+    image: vibe-app-image:latest
     volumes:
       - ./models:/models
       - ./documents:/documents
       - ./chroma_data:/usr/src/chroma_db
       - ./logs:/usr/src/logs
     environment:
-      - PYTHONUNBUFFERED=1 # Disable output buffering
-      - RUNNING_IN_DOCKER=true # Indicate that the code is running inside Docker
-    stdin_open: true  # Keep the standard input open
-    tty: true         # Allocate a pseudo-TTY
-    privileged: true
-    devices:
-      - /dev/snd:/dev/snd # Add access to the host's sound devices
-      - /dev/input:/dev/input # Add access to the host's input devices
+      - PYTHONUNBUFFERED=1
+      - RUNNING_IN_DOCKER=true
+      - ENABLE_AUDIO=false
+      - OMP_NUM_THREADS=2
+      - ANONYMIZED_TELEMETRY=False
+    stdin_open: true
+    tty: true

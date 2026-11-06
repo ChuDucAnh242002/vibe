@@ -1,26 +1,26 @@
-FROM python:3.9
+FROM python:3.9-slim-bookworm
 
 WORKDIR /usr/src/
 
-COPY requirements.txt ./
+COPY src/backend/requirements.txt ./
 
 RUN mkdir /usr/src/logs
 RUN mkdir -p chroma_db && chmod a+rwx -R chroma_db
 
 RUN apt-get update && apt-get install -y \
-    build-essential linux-perf  \
+    build-essential cmake pkg-config \
     portaudio19-dev libportaudio2 sox libsox-fmt-all \
-    pipewire pipewire-audio-client-libraries pipewire-pulse pipewire-alsa alsa-utils \
+    alsa-utils \
     libvoikko1 voikko-fi libvoikko-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+ENV CMAKE_BUILD_PARALLEL_LEVEL=1
+ENV CMAKE_ARGS="-DGGML_NATIVE=OFF"
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir -r requirements.txt && pip check
 
-COPY . .
-
-# Set environment variables for PipeWire
-ENV PIPEWIRE_SERVER=unix:/run/user/1000/pipewire-0
-
-EXPOSE 5000
+COPY src/backend/ ./
+COPY download_models.py ./
 
 CMD ["python", "app.py", "--cli"]
