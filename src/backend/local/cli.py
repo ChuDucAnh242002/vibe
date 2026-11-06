@@ -149,8 +149,13 @@ class CommandLineService:
                 )
             ).strip()
 
-            if command_input in ("0", "1", "2", "4", "8") and not self.app.audio_enabled:
-                self.print_text("Audio is disabled. Start with docker-compose.audio.yml to use speech.")
+            if (
+                command_input in ("0", "1", "2", "4", "8")
+                and not self.app.audio_enabled
+            ):
+                self.print_text(
+                    "Audio is disabled. Start with docker-compose.audio.yml to use speech."
+                )
                 continue
             if command_input == "5" and self.app.get_service(Srv.IR) is None:
                 self.print_text("Intent recognition is not enabled.")
@@ -259,7 +264,7 @@ class CommandLineService:
         """
         self._input_from_user(
             f"Write something for the QA pair service or '(b)ack': ",
-            self.app.retrieve_qa_pair
+            self.app.retrieve_qa_pair,
         )
 
     def _input_qa(self):
@@ -268,7 +273,7 @@ class CommandLineService:
         """
         self._input_from_user(
             f"Write something for the Question Answering service or '(b)ack': ",
-            self.app.retrieve_qa
+            self.app.retrieve_qa,
         )
 
     def _input_pdf(self):
@@ -276,8 +281,8 @@ class CommandLineService:
         Query text input from user for reading pdf.
         """
         self._input_from_user(
-            f"Write a PDF filename, 'qa', 'qa_test', or '(b)ack': ",
-            self.app.read_pdf
+            f"Write a PDF filename, 'qa', 'qa_test', 'qa_nordea', or '(b)ack': ",
+            self.app.read_pdf,
         )
 
     def _flush_input_buffer(self):
