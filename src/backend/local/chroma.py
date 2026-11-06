@@ -41,9 +41,15 @@ class ChromaService:
         self.vector_store_answers_test = self._vector_store(
             "ANSWER_COLLECTION_TEST_NAME"
         )
+        self.vector_store_questions_nordea = self._vector_store(
+            "NORDEA_QUESTION_COLLECTION_NAME"
+        )
+        self.vector_store_answers_nordea = self._vector_store(
+            "NORDEA_ANSWER_COLLECTION_NAME"
+        )
         self.qa_dataset = os.getenv("QA_DATASET", "qa")
-        if self.qa_dataset not in ("qa", "qa_test"):
-            raise ValueError("QA_DATASET must be qa or qa_test")
+        if self.qa_dataset not in ("qa", "qa_test", "qa_nordea"):
+            raise ValueError("QA_DATASET must be qa, qa_test, or qa_nordea")
 
     def _vector_store(self, setting):
         return Chroma(
@@ -72,13 +78,18 @@ class ChromaService:
             return self.vector_store_questions_test, self.vector_store_answers_test
         if dataset == "qa":
             return self.vector_store_questions, self.vector_store_answers
-        raise ValueError("QA dataset must be qa or qa_test")
+        if dataset == "qa_nordea":
+            return self.vector_store_questions_nordea, self.vector_store_answers_nordea
+        raise ValueError("QA dataset must be qa, qa_test, or qa_nordea")
 
     def retrieve_similar_qa_pair_with_relevant_scores(self, query, n=1):
         questions, answers = self._qa_stores(self.qa_dataset)
         matches = questions.similarity_search_with_relevance_scores(query=query, k=n)
         if not matches:
-            return "En tiedä. Import question pairs using menu 9: qa or qa_test."
+            return (
+                "En tiedä. Tuo kysymys-vastausdata valitsemalla valikosta 9: "
+                "qa, qa_test tai qa_nordea."
+            )
 
         question, score = matches[0]
         if score < -160:
@@ -94,14 +105,18 @@ class ChromaService:
 
     def add_qa_pair(self, file_name="qa"):
         questions, answers = self._qa_stores(file_name)
-        suffix = "_test" if file_name == "qa_test" else ""
-        with open(
-            Path(self.filePath) / f"question_data{suffix}.json", encoding="utf-8"
-        ) as file:
+        dataset_files = {
+            "qa": ("question_data.json", "answer_data.json"),
+            "qa_test": ("question_data_test.json", "answer_data_test.json"),
+            "qa_nordea": ("question_data_nordea.json", "answer_data_nordea.json"),
+        }
+        try:
+            question_file, answer_file = dataset_files[file_name]
+        except KeyError as error:
+            raise ValueError("Dataset must be qa, qa_test, or qa_nordea") from error
+        with open(Path(self.filePath) / question_file, encoding="utf-8") as file:
             question_data = json.load(file)
-        with open(
-            Path(self.filePath) / f"answer_data{suffix}.json", encoding="utf-8"
-        ) as file:
+        with open(Path(self.filePath) / answer_file, encoding="utf-8") as file:
             answer_data = json.load(file)
 
         answer_ids = {

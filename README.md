@@ -74,6 +74,8 @@ docker compose run --rm app
 
 Choose **3** to chat with Gemma. To use the question-pair retriever, choose **9**, enter `qa` (or `qa_test` for the test data), then choose **6** to ask questions. To answer questions about a PDF, choose **9** and enter its filename, then choose **7**. The first PDF question loads the Finnish QA model.
 
+The repository includes an additional Finnish question-pair dataset based on Nordea Kiinnitysluottopankki Oyj's official 2024 annual report. It covers the mortgage bank (not the whole Nordea Group); the Group's 2024 annual report is published in English and Swedish. To import the Finnish dataset, choose **9**, enter `qa_nordea`, and then choose **6** to ask questions. The Nordea pairs are stored in their own Chroma collections, separate from the tractor datasets. Each pair cites its report page and the official report URL in its metadata.
+
 To also use speech, download the speech models and enable host audio access (the downloader skips already downloaded model files):
 
 ```bash

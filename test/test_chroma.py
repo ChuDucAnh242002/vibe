@@ -41,6 +41,8 @@ def service(tmp_path):
         "vector_store_answers",
         "vector_store_questions_test",
         "vector_store_answers_test",
+        "vector_store_questions_nordea",
+        "vector_store_answers_nordea",
     ):
         setattr(result, name, MagicMock())
     return result
@@ -64,14 +66,20 @@ def test_retrieval_errors_propagate(service):
         service.retrieve_similar_entries("question")
 
 
-@pytest.mark.parametrize("dataset", ["qa", "qa_test"])
+@pytest.mark.parametrize("dataset", ["qa", "qa_test", "qa_nordea"])
 def test_import_and_retrieve_same_dataset(service, dataset):
-    suffix = "_test" if dataset == "qa_test" else ""
+    suffix = (
+        "_test" if dataset == "qa_test" else "_nordea" if dataset == "qa_nordea" else ""
+    )
     root = Path(service.filePath)
-    (root / f"question_data{suffix}.json").write_text(
+    question_file = (
+        "question_data.json" if not suffix else f"question_data{suffix}.json"
+    )
+    answer_file = "answer_data.json" if not suffix else f"answer_data{suffix}.json"
+    (root / question_file).write_text(
         json.dumps([{"page_content": "question", "metadata": {}, "answer_id": 1}])
     )
-    (root / f"answer_data{suffix}.json").write_text(
+    (root / answer_file).write_text(
         json.dumps([{"page_content": "answer", "metadata": {}, "id": 1}])
     )
     service.add_qa_pair(dataset)
@@ -101,4 +109,28 @@ def test_save_entry_uses_configured_embedding_store(service):
     assert (
         service.vector_store.add_documents.call_args.args[0][0].page_content
         == "summary"
+    )
+
+
+def test_nordea_dataset_has_valid_references_and_provenance():
+    documents = Path(__file__).parents[1] / "documents"
+    questions = json.loads(
+        (documents / "question_data_nordea.json").read_text(encoding="utf-8")
+    )
+    answers = json.loads(
+        (documents / "answer_data_nordea.json").read_text(encoding="utf-8")
+    )
+    answer_ids = {answer["id"] for answer in answers}
+
+    assert len(questions) == 20
+    assert len(answers) == 10
+    assert all(question["answer_id"] in answer_ids for question in questions)
+    assert all(
+        question["metadata"]["entity"] == "Nordea Kiinnitysluottopankki Oyj"
+        and question["metadata"]["page"] in (1, 2, 3)
+        for question in questions
+    )
+    assert all(
+        answer["metadata"]["url"] == "https://www.nordea.com/fi/doc/nmb-ar-2024-fin.pdf"
+        for answer in answers
     )

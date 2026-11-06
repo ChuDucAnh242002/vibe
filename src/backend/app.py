@@ -48,7 +48,9 @@ class AppManager:
             style="{",
             datefmt="%Y-%m-%d %H:%M:%S",
             handlers=[
-                logging.FileHandler(os.path.join(self.LOG_PATH, logfile_name), mode="w"),
+                logging.FileHandler(
+                    os.path.join(self.LOG_PATH, logfile_name), mode="w"
+                ),
                 logging.StreamHandler(),
             ],
         )
@@ -110,7 +112,7 @@ class AppManager:
         :param NDArray[floating[Any]] recording: The recorded audio data
         :param all bool: Activate all services
         """
-        
+
         audio_text = self.services[Srv.STT].transcribe(recording)
         self.logger.info(f"Text: {audio_text}")
         self.services[Srv.CLI].print_text(f"Audio text: {audio_text}")
@@ -178,14 +180,16 @@ class AppManager:
         except Exception as e:
             self.logger.exception("Failed to update input/output device indexes: %s", e)
 
-    def retrieve_qa_pair(self, question:str):
+    def retrieve_qa_pair(self, question: str):
         """
         Get the QA pair based on user input
 
         :param str question: Question that is used to retrieve similar question
         """
         try:
-            answer = self.services[Srv.RAG].retrieve_similar_qa_pair_with_relevant_scores(question)
+            answer = self.services[
+                Srv.RAG
+            ].retrieve_similar_qa_pair_with_relevant_scores(question)
 
             self.services[Srv.CLI].print_text(answer)
             self.logger.info("Successfully retrieve QA pair")
@@ -207,9 +211,13 @@ class AppManager:
             answer = self.services[Srv.QA].retrieve_answer(question, context)
 
             self.services[Srv.CLI].print_text(answer)
-            self.logger.info("Successfully retrieve answer from Question Answering model")
+            self.logger.info(
+                "Successfully retrieve answer from Question Answering model"
+            )
         except Exception as e:
-            self.logger.exception("Failed to get the answer from Question Answering model")
+            self.logger.exception(
+                "Failed to get the answer from Question Answering model"
+            )
             self.services[Srv.CLI].print_text(f"Question answering failed: {e}")
 
     def read_pdf(self, file_name):
@@ -218,7 +226,7 @@ class AppManager:
         """
         file_name = file_name.strip()
         try:
-            if file_name in ("qa", "qa_test"):
+            if file_name in ("qa", "qa_test", "qa_nordea"):
                 self.services[Srv.RAG].add_qa_pair(file_name)
                 self.logger.info("Successfully added QA pairs to ChromaDB")
             else:
@@ -383,7 +391,7 @@ class AppManager:
 
         self.logger.info("PERF : [text_gen] Done generating text")
         return
-    
+
     def qa_pair_gen(self, input_text: str, synthesize: bool = False):
         """
         The QA pair generates text based on user's input text
@@ -393,7 +401,9 @@ class AppManager:
         :param bool synthesize: If True, synthesize the generated text
         """
         self.logger.info("PERF : [text_gen] Generating text")
-        answer = self.services[Srv.RAG].retrieve_similar_qa_pair_with_relevant_scores(input_text)
+        answer = self.services[Srv.RAG].retrieve_similar_qa_pair_with_relevant_scores(
+            input_text
+        )
         self.services[Srv.CLI].print_text(answer, None, False)
         self.services[Srv.CLI].print_separator()
         if synthesize:
