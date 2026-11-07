@@ -141,7 +141,7 @@ class CommandLineService:
             print(self.term.ljust("7: Only Question Answering model"))
             print(self.term.ljust("8: All services silent mode (requires audio)"))
             print(self.term.ljust("9: Add document to ChromaDB"))
-            print(self.term.ljust("10: Foundry via gateway (sends text to cloud)"))
+            print(self.term.ljust("10: Cloud via gateway (sends text to cloud)"))
             print(self.term.ljust("0: Adjust audio input/output devices"))
 
             command_input = input(
@@ -245,7 +245,8 @@ class CommandLineService:
 
     def _input_cloud_text_gen(self):
         self.print_text(
-            "This option sends your typed question to Foundry through the gateway. "
+            "This option sends your typed question to the configured cloud provider "
+            "(Foundry or AWS Bedrock) through the gateway. "
             "Local Gemma and speech remain local. Do not enter confidential information."
         )
         while True:

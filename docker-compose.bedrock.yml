@@ -1,0 +1,20 @@
+services:
+  app:
+    environment:
+      VIBE_GATEWAY_URL: http://gateway:8080
+      VIBE_GATEWAY_TOKEN: ${VIBE_GATEWAY_TOKEN:?Set the gateway device token}
+  gateway:
+    build:
+      context: .
+      dockerfile: src/gateway/Dockerfile
+    environment:
+      GATEWAY_HOST: 0.0.0.0
+      VIBE_GATEWAY_PROVIDER: bedrock
+      VIBE_GATEWAY_TOKEN: ${VIBE_GATEWAY_TOKEN:?Set the gateway device token}
+      AWS_REGION: ${AWS_REGION:?Set the AWS region}
+      BEDROCK_MODEL_ID: ${BEDROCK_MODEL_ID:?Set the Bedrock model or inference profile ID}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN:-}
+    ports:
+      - "127.0.0.1:8080:8080"

@@ -361,7 +361,7 @@ class AppManager:
                 if share_context
                 else ""
             )
-            self.services[Srv.CLI].print_text("Provider: Foundry via gateway")
+            self.services[Srv.CLI].print_text("Provider: configured cloud gateway")
             self._display_generation(service.generate(input_text, context))
         except (GatewayError, ValueError, KeyError) as error:
             self.logger.error("Cloud generation failed (%s)", type(error).__name__)
