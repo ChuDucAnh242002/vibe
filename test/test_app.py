@@ -174,6 +174,43 @@ class TestAppManager:
         service = self.app.get_service(Srv.STT)
         assert service == self.app.services[Srv.STT]
 
+    @pytest.mark.parametrize("share_context", [False, True])
+    def test_cloud_only_shares_context_when_approved(self, share_context):
+        self.app.services[Srv.RAG] = MagicMock()
+        self.app.services[Srv.RAG].retrieve_similar_entries.return_value = (
+            "approved context"
+        )
+        with patch.object(app_module, "GatewayTextGenService") as provider:
+            provider.return_value.generate.return_value = iter(["Hei"])
+            self.app.cloud_text_gen("question", share_context=share_context)
+        provider.return_value.generate.assert_called_once_with(
+            "question", "approved context" if share_context else ""
+        )
+        assert (
+            self.app.services[Srv.RAG].retrieve_similar_entries.called == share_context
+        )
+        self.app.services[Srv.TEXT_GEN].generate.assert_not_called()
+
+    def test_cloud_failure_is_visible_without_fallback(self):
+        with patch.object(
+            app_module,
+            "GatewayTextGenService",
+            side_effect=app_module.GatewayError("unavailable"),
+        ):
+            self.app.cloud_text_gen("question")
+        assert (
+            "Cloud request failed"
+            in self.app.services[Srv.CLI].print_text.call_args.args[0]
+        )
+        self.app.services[Srv.TEXT_GEN].generate.assert_not_called()
+
+    def test_text_stream_preserves_trailing_speech(self):
+        self.app._display_generation(iter(["Hei.", " Loput"]), synthesize=True)
+        assert self.app.services[Srv.TTS].synthesize.call_args_list == [
+            (("Hei.",), {}),
+            (("Loput",), {}),
+        ]
+
     @pytest.mark.unit()
     def test_exit(self):
         pass

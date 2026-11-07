@@ -12,6 +12,7 @@ from local.constants import APP_LOG_FILE
 from dotenv import load_dotenv
 from local.cli import CommandLineService
 from local.text_gen import TextGenService
+from local.cloud_text_gen import GatewayError, GatewayTextGenService
 from local.chroma import ChromaService
 from local.tts import TextToSpeech
 from local.audio import AudioService
@@ -20,6 +21,7 @@ from local.question import QuestionAnsweringService
 
 
 from pathlib import Path
+from typing import Iterator
 
 
 class AppManager:
@@ -346,28 +348,40 @@ class AppManager:
         if self.services[Srv.TEXT_GEN] is None:
             self.services[Srv.TEXT_GEN] = TextGenService(self.root)
 
-        # print("\nContext:", context, "\n")
-
         llm_output = self.services[Srv.TEXT_GEN].generate(input_text, context)
+        self._display_generation(llm_output, synthesize, silent)
+        self.logger.info("PERF : [text_gen] Done generating text")
+
+    def cloud_text_gen(self, input_text: str, share_context: bool = False):
+        """Cloud requests are explicit and never fall back to another model."""
+        try:
+            service = GatewayTextGenService()
+            context = (
+                self.services[Srv.RAG].retrieve_similar_entries(input_text)
+                if share_context
+                else ""
+            )
+            self.services[Srv.CLI].print_text("Provider: Foundry via gateway")
+            self._display_generation(service.generate(input_text, context))
+        except (GatewayError, ValueError, KeyError) as error:
+            self.logger.error("Cloud generation failed (%s)", type(error).__name__)
+            self.services[Srv.CLI].print_text(
+                "\nCloud request failed; any displayed response may be incomplete. "
+                "Check gateway settings and connectivity. Select option 3 for local Gemma."
+            )
+
+    def _display_generation(
+        self, llm_output: Iterator[str], synthesize: bool = False, silent: bool = False
+    ):
         if silent:
-            full_text = "".join(
-                token["choices"][0]["delta"].get("content", "") for token in llm_output
-            ).strip()
+            full_text = "".join(llm_output).strip()
             if synthesize:
                 self.services[Srv.TTS].synthesize(full_text)
-
-            # self.services[Srv.CONTEXT_MANAGER].messages.extend(
-            #     [
-            #         {"role": "user", "content": input_text},
-            #         {"role": "assistant", "content": full_text},
-            #     ]
-            # )
 
         else:
             sentence = ""
 
-            for token in llm_output:
-                text = token["choices"][0]["delta"].get("content", "")
+            for text in llm_output:
                 sentence += text
 
                 if synthesize and (
@@ -379,18 +393,9 @@ class AppManager:
 
                 self.services[Srv.CLI].print_text(text, None, False)
 
-            # self.services[Srv.CONTEXT_MANAGER].messages.extend(
-            #     [
-            #         {"role": "user", "content": input_text},
-            #         {"role": "assistant", "content": sentence.strip()},
-            #     ]
-            # )
             self.services[Srv.CLI].print_separator()
             if synthesize and sentence.strip():
                 self.services[Srv.TTS].synthesize(sentence.strip())
-
-        self.logger.info("PERF : [text_gen] Done generating text")
-        return
 
     def qa_pair_gen(self, input_text: str, synthesize: bool = False):
         """

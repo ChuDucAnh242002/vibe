@@ -26,6 +26,21 @@ with patch.dict(
 
 class TestCommandLineService:
 
+    @pytest.mark.parametrize(
+        "approval,called,context",
+        [("yes", True, False), ("with-context", True, True), ("no", False, False)],
+    )
+    def test_cloud_requires_explicit_approval(self, approval, called, context):
+        self.cli_instance.testing = True
+        with patch("builtins.input", side_effect=["question", approval]):
+            self.cli_instance._input_cloud_text_gen()
+        if called:
+            self.app.cloud_text_gen.assert_called_once_with(
+                "question", share_context=context
+            )
+        else:
+            self.app.cloud_text_gen.assert_not_called()
+
     def setup_method(self):
         self.app = MagicMock()
         self.cli_instance = CommandLineService(self.app)
