@@ -66,6 +66,18 @@ class TestTextGenService:
             )  # This is a placeholder, the actual input can be decided later
             assert result is not None
 
+    def test_generation_yields_provider_independent_text(self):
+        self.text_gen_service.llm_model.create_chat_completion.return_value = [
+            {"choices": [{"delta": {"role": "assistant"}}]},
+            {"choices": [{"delta": {"content": "Hei"}}]},
+            {"choices": [{"delta": {"content": " maailma"}}]},
+        ]
+        assert list(self.text_gen_service.generate("question")) == [
+            "",
+            "Hei",
+            " maailma",
+        ]
+
     def test_context_is_in_user_turn(self):
         self.text_gen_service.generate("question", "retrieved context")
         messages = (

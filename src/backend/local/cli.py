@@ -141,11 +141,12 @@ class CommandLineService:
             print(self.term.ljust("7: Only Question Answering model"))
             print(self.term.ljust("8: All services silent mode (requires audio)"))
             print(self.term.ljust("9: Add document to ChromaDB"))
+            print(self.term.ljust("10: Cloud via gateway (sends text to cloud)"))
             print(self.term.ljust("0: Adjust audio input/output devices"))
 
             command_input = input(
                 self.term.ljust(
-                    "Choose service (from 0 to 9), (q)uit or (s)ave and exit:"
+                    "Choose service (from 0 to 10), (q)uit or (s)ave and exit:"
                 )
             ).strip()
 
@@ -184,6 +185,8 @@ class CommandLineService:
                 self._toggle_recording(True, silent=True)
             elif command_input == "9":
                 self._input_pdf()
+            elif command_input == "10":
+                self._input_cloud_text_gen()
 
             if self.testing:
                 # If testing is enabled, exit after one iteration
@@ -239,6 +242,38 @@ class CommandLineService:
             f"Write something for text generation service or '(b)ack': ",
             self.app.text_gen,
         )
+
+    def _input_cloud_text_gen(self):
+        self.print_text(
+            "This option sends your typed question to the configured cloud provider "
+            "(Foundry or AWS Bedrock) through the gateway. "
+            "Local Gemma and speech remain local. Do not enter confidential information."
+        )
+        while True:
+            prompt = input(self.term.ljust("Cloud question or '(b)ack': ")).strip()
+            if prompt.lower() in ("b", "back"):
+                return
+            if not prompt:
+                self.print_text("Enter a question or choose back.")
+                continue
+            approval = (
+                input(
+                    self.term.ljust(
+                        "Send this question to the cloud? Type 'yes', 'with-context' "
+                        "to also send retrieved PDF excerpts, or anything else to cancel: "
+                    )
+                )
+                .strip()
+                .lower()
+            )
+            if approval in ("yes", "with-context"):
+                self.app.cloud_text_gen(
+                    prompt, share_context=approval == "with-context"
+                )
+            else:
+                self.print_text("Cloud request cancelled; nothing sent.")
+            if self.testing:
+                return
 
     def _input_tts(self):
         """

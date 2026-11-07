@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Iterator
 
 import numpy as np
 
@@ -28,13 +29,13 @@ class SpeechToTextInterface(ABC):
 
 class TextGenerationInterface(ABC):
     @abstractmethod
-    def generate(self, user_input: str, system_prompt="") -> str:
+    def generate(self, user_input: str, context: str = "") -> Iterator[str]:
         """
         Generates a response in a chat-like format, ensuring correct system message handling.
 
         :param str user_input: The input text from the user.
-        :param str system_prompt: The system prompt to guide the model's responses, defaults to "".
-        :return generator: A generator that yields the model's response in a streaming fashion.
+        :param str context: Retrieved context used to ground the response.
+        :return: An iterator of text fragments, independent of the model provider.
         """
         pass
 

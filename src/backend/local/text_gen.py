@@ -1,4 +1,5 @@
 import os
+from typing import Iterator
 from llama_cpp import Llama
 from abstract_classes import TextGenerationInterface
 
@@ -53,7 +54,7 @@ class TextGenService(TextGenerationInterface):
             n_threads=6,
         )
 
-    def generate(self, user_input, context=""):
+    def generate(self, user_input: str, context: str = "") -> Iterator[str]:
         """
         The text generation service will generate responses based on user input
 
@@ -71,7 +72,7 @@ class TextGenService(TextGenerationInterface):
             },
         ]
 
-        return self.llm_model.create_chat_completion(
+        chunks = self.llm_model.create_chat_completion(
             messages=messages,
             max_tokens=self.max_new_tokens,
             temperature=self.temperature if self.do_sample else 0.0,
@@ -79,4 +80,9 @@ class TextGenService(TextGenerationInterface):
             top_k=self.top_k,
             stream=True,
             repeat_penalty=self.repeat_penalty,
+        )
+        return (
+            chunk["choices"][0]["delta"].get("content", "")
+            for chunk in chunks
+            if chunk["choices"]
         )
