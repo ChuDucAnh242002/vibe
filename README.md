@@ -85,13 +85,14 @@ docker compose -f docker-compose.yml -f docker-compose.audio.yml run --rm app
 
 Audio mode requires Linux and usable `/dev/snd` devices. The text-only configuration does not request privileged access or expose unused ports. Both modes persist models, documents, Chroma data, and logs in the corresponding project directories.
 
-## Optional Foundry gateway (hybrid mode)
+## Optional cloud gateway (hybrid mode)
 
-**Menu 3 stays local; menu 10 uses Foundry through a separate gateway.**
+**Menu 3 stays local; menu 10 uses the gateway's configured cloud provider.**
 Speech, embeddings, and document storage remain local. Cloud errors are shown;
-there is no automatic fallback.
+there is no automatic fallback. Choose either Foundry or AWS Bedrock when starting
+the gateway; switching providers requires recreating it.
 
-### Local Docker setup
+### Foundry Docker setup
 
 1. Complete [Run with Docker](#run-with-docker), including the model download.
 2. In Foundry, deploy a model supporting v1 streaming chat completions and
@@ -122,6 +123,43 @@ docker compose -f docker-compose.yml -f docker-compose.hybrid.yml stop gateway
 
 Ordinary `docker compose run --rm app` still works without cloud credentials.
 
+### AWS Bedrock Docker setup
+
+1. Complete [Run with Docker](#run-with-docker), including the local model download.
+2. Choose a Bedrock model or inference profile that supports **ConverseStream**
+   in your AWS region. Enable any required [model access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html)
+   and give the gateway's AWS identity `bedrock:InvokeModelWithResponseStream`
+   permission for that model or profile. Usage can incur AWS charges.
+3. Configure temporary AWS credentials in your shell, then run these commands
+   from the repository root. Replace the region and model ID with your values;
+   do not commit credentials.
+
+```bash
+export VIBE_GATEWAY_TOKEN="$(openssl rand -hex 32)"
+export AWS_REGION="<your-aws-region>"
+export BEDROCK_MODEL_ID="<model-or-inference-profile-id>"
+export AWS_ACCESS_KEY_ID="<temporary-access-key-id>"
+export AWS_SECRET_ACCESS_KEY="<temporary-secret-access-key>"
+export AWS_SESSION_TOKEN="<temporary-session-token>"
+docker compose -f docker-compose.yml -f docker-compose.bedrock.yml build
+docker compose -f docker-compose.yml -f docker-compose.bedrock.yml up -d gateway
+curl --fail --retry 5 --retry-connrefused http://127.0.0.1:8080/health
+docker compose -f docker-compose.yml -f docker-compose.bedrock.yml run --rm app
+```
+
+Choose **10** and approve each request as described above. `/health` does not
+verify AWS credentials or model access. When temporary credentials expire, set
+new values and rerun `up -d gateway` to recreate the gateway. Stop it with:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.bedrock.yml stop gateway
+```
+
+The gateway also supports the AWS SDK's credential chain, such as an IAM role
+when hosted in AWS. Credentials remain on the gateway, not the device. Configure
+only one gateway override at a time; an inference profile may route requests
+across regions, so check its data residency before use.
+
 ### Separately hosted gateway
 
 Run the gateway on your server behind an HTTPS reverse proxy. On the device,
@@ -131,7 +169,7 @@ set `VIBE_GATEWAY_URL=https://your-gateway.example` and `VIBE_GATEWAY_TOKEN`, th
 docker compose run --rm -e VIBE_GATEWAY_URL -e VIBE_GATEWAY_TOKEN app
 ```
 
-Keep the Foundry API key on the gateway, never on the device. Built-in HTTP is
+Keep the cloud credentials on the gateway, never on the device. Built-in HTTP is
 for trusted/internal use only (loopback or Docker's `gateway` hostname).
 Before fleet deployment, add per-device identities, tenant isolation, and cost controls.
 
@@ -169,6 +207,7 @@ The menu provides these operations:
 - **3**: Enter text for local language-model generation.
 - **4**: Enter text to synthesize speech.
 - **9**: Enter a PDF filename from `documents/` to index it in Chroma.
+- **10**: Send a confirmed request through the configured cloud gateway.
 - **0**: Select audio input and output devices.
 - **q**: Exit.
 
