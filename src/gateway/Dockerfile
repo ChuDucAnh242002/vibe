@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bookworm
+FROM python:3.11-slim-bookworm
 WORKDIR /app
 COPY src/gateway/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt && pip check

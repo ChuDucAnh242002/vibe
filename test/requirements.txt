@@ -8,3 +8,4 @@ pytz==2025.2
 timezonefinder==6.5.9
 libvoikko==4.3
 pytest-cov==6.1.1
+-r ../src/gateway/requirements.txt

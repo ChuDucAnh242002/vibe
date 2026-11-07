@@ -259,3 +259,153 @@ def test_foundry_timeout_is_reported(gateway):
         requests.Timeout
     ):
         list(gateway.FoundryService().generate("question", ""))
+
+
+@pytest.fixture
+def bedrock_service(gateway):
+    with patch.dict(
+        os.environ, {"AWS_REGION": "eu-north-1", "BEDROCK_MODEL_ID": "model-id"}
+    ), patch.object(gateway.boto3, "client") as client:
+        service = gateway.BedrockService()
+    return service, client
+
+
+def test_bedrock_streams_text_and_uses_configured_model(bedrock_service):
+    service, client = bedrock_service
+    stream = MagicMock()
+    stream.__iter__.return_value = iter(
+        [
+            {"messageStart": {"role": "assistant"}},
+            {"contentBlockDelta": {"delta": {"text": "Hei"}}},
+            {"contentBlockDelta": {"delta": {"text": " maailma"}}},
+            {"messageStop": {"stopReason": "end_turn"}},
+        ]
+    )
+    service.client.converse_stream.return_value = {"stream": stream}
+    assert list(service.generate("question", "context")) == ["Hei", " maailma"]
+    kwargs = service.client.converse_stream.call_args.kwargs
+    assert kwargs["modelId"] == "model-id"
+    assert kwargs["inferenceConfig"] == {"maxTokens": 512}
+    assert kwargs["messages"][0]["content"][0]["text"] == (
+        "Lähdeaineisto:\ncontext\n\nKysymys:\nquestion"
+    )
+    assert kwargs["system"][0]["text"]
+    assert client.call_args.kwargs["region_name"] == "eu-north-1"
+    assert client.call_args.kwargs["config"].retries["total_max_attempts"] == 1
+    stream.close.assert_called_once()
+
+
+def test_bedrock_request_matches_sdk_model(gateway, bedrock_service):
+    from botocore.validate import validate_parameters
+
+    service, _ = bedrock_service
+    stream = MagicMock()
+    stream.__iter__.return_value = iter(
+        [
+            {"contentBlockDelta": {"delta": {"text": "Hei"}}},
+            {"messageStop": {"stopReason": "end_turn"}},
+        ]
+    )
+    service.client.converse_stream.return_value = {"stream": stream}
+    list(service.generate("question", ""))
+    with patch.dict(
+        os.environ,
+        {
+            "AWS_ACCESS_KEY_ID": "test-key",
+            "AWS_SECRET_ACCESS_KEY": "test-secret",
+            "AWS_EC2_METADATA_DISABLED": "true",
+        },
+    ):
+        client = gateway.boto3.client("bedrock-runtime", region_name="eu-north-1")
+    shape = client.meta.service_model.operation_model("ConverseStream").input_shape
+    validate_parameters(service.client.converse_stream.call_args.kwargs, shape)
+
+
+@pytest.mark.parametrize(
+    "events",
+    [
+        [{"contentBlockDelta": {"delta": {"text": "partial"}}}],
+        [{"messageStop": {"stopReason": "end_turn"}}],
+        [
+            {"contentBlockDelta": {"delta": {"text": "partial"}}},
+            {"messageStop": {"stopReason": "guardrail_intervened"}},
+        ],
+        [{"modelStreamErrorException": {"message": "private error"}}],
+    ],
+)
+def test_bedrock_rejects_incomplete_filtered_or_error_stream(bedrock_service, events):
+    service, _ = bedrock_service
+    stream = MagicMock()
+    stream.__iter__.return_value = iter(events)
+    service.client.converse_stream.return_value = {"stream": stream}
+    with pytest.raises(RuntimeError):
+        list(service.generate("question", ""))
+    stream.close.assert_called_once()
+
+
+def test_bedrock_sdk_error_is_reported_to_gateway(bedrock_service, gateway):
+    service, _ = bedrock_service
+    service.client.converse_stream.side_effect = gateway.ClientError(
+        {"Error": {"Code": "AccessDeniedException", "Message": "private"}},
+        "ConverseStream",
+    )
+    with pytest.raises(RuntimeError, match="Bedrock request failed"):
+        list(service.generate("question", ""))
+
+
+def test_bedrock_stream_reaches_device(server, client_module, bedrock_service):
+    service, _ = bedrock_service
+    stream = MagicMock()
+    stream.__iter__.return_value = iter(
+        [
+            {"contentBlockDelta": {"delta": {"text": "Hei"}}},
+            {"messageStop": {"stopReason": "end_turn"}},
+        ]
+    )
+    service.client.converse_stream.return_value = {"stream": stream}
+    server.service = service
+    with patch.dict(
+        os.environ,
+        {"VIBE_GATEWAY_URL": url(server), "VIBE_GATEWAY_TOKEN": "test-device-token"},
+    ):
+        assert list(client_module.GatewayTextGenService().generate("question")) == [
+            "Hei"
+        ]
+    stream.close.assert_called_once()
+
+
+def test_bedrock_sdk_failure_reaches_device(
+    server, client_module, bedrock_service, gateway
+):
+    service, _ = bedrock_service
+    service.client.converse_stream.side_effect = gateway.ClientError(
+        {"Error": {"Code": "AccessDeniedException", "Message": "private"}},
+        "ConverseStream",
+    )
+    server.service = service
+    with patch.dict(
+        os.environ,
+        {"VIBE_GATEWAY_URL": url(server), "VIBE_GATEWAY_TOKEN": "test-device-token"},
+    ), pytest.raises(client_module.GatewayError):
+        list(client_module.GatewayTextGenService().generate("question"))
+
+
+@pytest.mark.parametrize("provider", ["foundry", "bedrock"])
+def test_gateway_selects_configured_provider(gateway, provider):
+    with patch.dict(os.environ, {"VIBE_GATEWAY_PROVIDER": provider}), patch.object(
+        gateway, "FoundryService"
+    ) as foundry, patch.object(gateway, "BedrockService") as bedrock:
+        assert gateway.create_service() is (
+            foundry.return_value if provider == "foundry" else bedrock.return_value
+        )
+
+
+def test_gateway_defaults_to_foundry_and_rejects_unknown_provider(gateway):
+    with patch.dict(os.environ, {}, clear=True), patch.object(
+        gateway, "FoundryService"
+    ) as foundry:
+        assert gateway.create_service() is foundry.return_value
+    with patch.dict(os.environ, {"VIBE_GATEWAY_PROVIDER": "unknown"}), pytest.raises(
+        ValueError, match="foundry or bedrock"
+    ):
+        gateway.create_service()
