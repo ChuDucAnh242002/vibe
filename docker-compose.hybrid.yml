@@ -1,0 +1,17 @@
+services:
+  app:
+    environment:
+      VIBE_GATEWAY_URL: http://gateway:8080
+      VIBE_GATEWAY_TOKEN: ${VIBE_GATEWAY_TOKEN:?Set the gateway device token}
+  gateway:
+    build:
+      context: .
+      dockerfile: src/gateway/Dockerfile
+    environment:
+      GATEWAY_HOST: 0.0.0.0
+      VIBE_GATEWAY_TOKEN: ${VIBE_GATEWAY_TOKEN:?Set the gateway device token}
+      FOUNDRY_ENDPOINT: ${FOUNDRY_ENDPOINT:?Set the Foundry endpoint}
+      FOUNDRY_DEPLOYMENT: ${FOUNDRY_DEPLOYMENT:?Set the deployed model name}
+      FOUNDRY_API_KEY: ${FOUNDRY_API_KEY:?Set the Foundry API key}
+    ports:
+      - "127.0.0.1:8080:8080"
