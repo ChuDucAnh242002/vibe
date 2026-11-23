@@ -85,6 +85,39 @@ docker compose -f docker-compose.yml -f docker-compose.audio.yml run --rm app
 
 Audio mode requires Linux and usable `/dev/snd` devices. The text-only configuration does not request privileged access or expose unused ports. Both modes persist models, documents, Chroma data, and logs in the corresponding project directories.
 
+## Local development with Devbox
+
+[Install Devbox](https://www.jetify.com/docs/devbox/) and run from the repository
+root. Devbox installs the locked Python 3.9 and native audio/build tools and
+creates a separate `.devbox/venv`.
+
+```bash
+devbox run doctor      # inspect the tools and native libraries
+devbox run setup-test  # install test/requirements.txt in the Devbox venv
+devbox run test        # focused, mocked model-download tests
+```
+
+For the full existing test suite, run `devbox run -- python -m pytest test`.
+These commands do not download models or require audio devices. Python test
+dependencies are installed separately from Devbox packages.
+
+To install the application locally, use the Devbox shell and keep the separate
+PyAudio build to prevent mixing host and Nix C library headers:
+
+```bash
+devbox shell
+python -m pip install --upgrade pip
+NIX_ENFORCE_PURITY=1 NIX_STORE=/nix/store NIX_BUILD_TOP="${TMPDIR:-/tmp}" \
+  python -m pip install --no-cache-dir PyAudio==0.2.14
+python -m pip install torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+CMAKE_BUILD_PARALLEL_LEVEL=1 CMAKE_ARGS="-DGGML_NATIVE=OFF" python -m pip install -r src/backend/requirements.txt
+python -m pip check
+```
+
+Follow [Run locally](#run-locally) for model downloads and startup. Models and
+audio devices remain separate prerequisites; Docker remains an alternative.
+Python 3.9 is end-of-life; upgrading it requires separate compatibility work.
+
 ## Optional cloud gateway (hybrid mode)
 
 **Menu 3 stays local; menu 10 uses the gateway's configured cloud provider.**

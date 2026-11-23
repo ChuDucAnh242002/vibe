@@ -4,6 +4,7 @@ models/
 .vscode/
 recorded_audio.wav
 .venv/
+.devbox/
 .pytest_cache/
 *.log
 chroma_data/
