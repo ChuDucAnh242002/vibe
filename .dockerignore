@@ -1,4 +1,5 @@
 .venv/
+.devbox/
 .vscode/
 .pytest_cache/
 .github/

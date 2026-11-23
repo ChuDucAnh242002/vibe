@@ -1,16 +1,16 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.22.0/.schema/devbox.schema.json",
   "packages": [
-    "python@3.9",
     "gcc@latest",
     "cmake@latest",
     "pkg-config@latest",
     "portaudio@latest",
     "sox@latest",
-    "libvoikko@latest"
+    "libvoikko@latest",
+    "python@3.11.18"
   ],
   "env": {
-    "VENV_DIR": "$PWD/.devbox/venv"
+    "VENV_DIR": "$PWD/.devbox/venv-py311"
   },
   "shell": {
     "init_hook": [

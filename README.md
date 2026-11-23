@@ -47,7 +47,7 @@ The repository also contains intent recognition, weather, YLE news, a standalone
 
 ## Requirements
 
-- Python 3.9 for a local installation, or Docker with Docker Compose.
+- Python 3.11 for a local installation, or Docker with Docker Compose.
 - Linux is the documented/tested target. Audio use requires working host audio devices; PipeWire is used by the Docker image.
 - Several large model files are downloaded before the first run. Ensure sufficient disk space and network access.
 - For a local Linux install, PortAudio and SoX are required by the audio stack. The Docker image installs these system packages itself.
@@ -88,8 +88,9 @@ Audio mode requires Linux and usable `/dev/snd` devices. The text-only configura
 ## Local development with Devbox
 
 [Install Devbox](https://www.jetify.com/docs/devbox/) and run from the repository
-root. Devbox installs the locked Python 3.9 and native audio/build tools and
-creates a separate `.devbox/venv`.
+root. Devbox installs the locked Python 3.11 and native audio/build tools and
+creates `.devbox/venv-py311`. The previous `.devbox/venv` is left untouched;
+install dependencies again in the new environment.
 
 ```bash
 devbox run doctor      # inspect the tools and native libraries
@@ -116,7 +117,8 @@ python -m pip check
 
 Follow [Run locally](#run-locally) for model downloads and startup. Models and
 audio devices remain separate prerequisites; Docker remains an alternative.
-Python 3.9 is end-of-life; upgrading it requires separate compatibility work.
+Python 3.11 is a temporary bridge supported with security fixes until October
+2027; a newer runtime requires separate native dependency compatibility work.
 
 ## Optional cloud gateway (hybrid mode)
 
@@ -217,9 +219,13 @@ billable retries, and does not log request content or credentials.
 Create and activate a virtual environment:
 
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 ```
+
+If `.venv` already uses Python 3.9, move it aside before creating the new
+environment and reinstall dependencies; an existing virtual environment is not
+automatically migrated.
 
 Install backend dependencies, download the models, and start the CLI:
 
@@ -265,9 +271,11 @@ Run tests with coverage:
 pytest --cov=. --cov-report=term --cov-report=xml --cov-config=.coveragerc test
 ```
 
-GitHub Actions runs Black 25.1.0 and the Python 3.9 test suite on Ubuntu 24.04
-on pull requests to `main` and pushes to `main`. Test and coverage reports are
-retained as workflow artifacts for seven days when generated.
+GitHub Actions runs Black 25.1.0, the Python 3.11 test suite, and a backend
+image build/import check on Ubuntu 24.04 on pull requests to `main` and pushes
+to `main`. Test and coverage reports are retained as workflow artifacts for
+seven days when generated. Model inference and audio devices require separate
+validation.
 
 ## Data and logs
 
