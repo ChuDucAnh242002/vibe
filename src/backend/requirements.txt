@@ -39,6 +39,8 @@ pytest==8.3.5
 tox==4.24.2
 hassil==3.0.0
 requests==2.32.3
+# tox requires chardet>=5.2; requests 2.32.3 supports versions below 6.
+chardet>=5.2,<6
 pytz==2025.2
 timezonefinder==6.5.9
 libvoikko==4.3

@@ -24,7 +24,9 @@ jobs:
       - name: Build Python 3.11 backend image
         run: docker build -t vibe-backend-ci -f src/backend/Dockerfile .
       - name: Check application imports
-        run: docker run --rm -e RUNNING_IN_DOCKER=true --entrypoint python vibe-backend-ci app.py --help
+        run: |
+          docker run --rm --entrypoint python vibe-backend-ci -W error::Warning:requests -c 'import requests'
+          docker run --rm -e RUNNING_IN_DOCKER=true --entrypoint python vibe-backend-ci app.py --help
   devbox-smoke:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
