@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.22.0/.schema/devbox.schema.json",
+  "packages": [
+    "python@3.9",
+    "gcc@latest",
+    "cmake@latest",
+    "pkg-config@latest",
+    "portaudio@latest",
+    "sox@latest",
+    "libvoikko@latest"
+  ],
+  "env": {
+    "VENV_DIR": "$PWD/.devbox/venv"
+  },
+  "shell": {
+    "init_hook": [
+      ". \"$VENV_DIR/bin/activate\"",
+      "export LD_LIBRARY_PATH=\"$DEVBOX_PACKAGES_DIR/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}\""
+    ],
+    "scripts": {
+      "doctor": [
+        "python --version",
+        "python -m pip --version",
+        "gcc --version",
+        "cmake --version",
+        "pkg-config --modversion portaudio-2.0",
+        "sox --version",
+        "python -c 'import ctypes; ctypes.CDLL(\"libvoikko.so\")'"
+      ],
+      "setup-test": [
+        "python -m pip install -r test/requirements.txt"
+      ],
+      "test": [
+        "python -m pytest -q test/test_download_models.py"
+      ]
+    }
+  }
+}
