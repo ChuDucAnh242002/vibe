@@ -85,6 +85,12 @@ docker compose -f docker-compose.yml -f docker-compose.audio.yml run --rm app
 
 Audio mode requires Linux and usable `/dev/snd` devices. The text-only configuration does not request privileged access or expose unused ports. Both modes persist models, documents, Chroma data, and logs in the corresponding project directories.
 
+Use trusted model files and restrict write access to the models directory.
+The embedded Chroma client does not expose a Chroma REST server. ChromaDB has an
+[unpatched advisory](https://github.com/advisories/GHSA-36p7-vc44-83pf)
+affecting a server collection-update operation; do not expose a separate
+Chroma server or allow untrusted collection updates while it remains unresolved.
+
 ## Local development with Devbox
 
 [Install Devbox](https://www.jetify.com/docs/devbox/) and run from the repository
