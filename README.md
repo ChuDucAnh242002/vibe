@@ -232,9 +232,9 @@ Run tests with coverage:
 pytest --cov=. --cov-report=term --cov-report=xml --cov-config=.coveragerc test
 ```
 
-GitHub Actions runs Black 25.1.0 and the Python 3.9 test suite on pull requests
-to `main` and pushes to `main`. Test and coverage reports are retained as
-workflow artifacts for seven days when generated.
+GitHub Actions runs Black 25.1.0 and the Python 3.9 test suite on Ubuntu 24.04
+on pull requests to `main` and pushes to `main`. Test and coverage reports are
+retained as workflow artifacts for seven days when generated.
 
 ## Data and logs
 
