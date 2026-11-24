@@ -293,6 +293,10 @@ validation.
 
 ## Known limitations
 
+For the unpatched ChromaDB advisory, weekly dependency updates, and the
+pre-October-2027 Python/Piper migration, see
+[dependency maintenance](doc/dependency-maintenance.md).
+
 - The application does not currently expose a web interface, even though `app.py` accepts a `--web` option.
 - Intent recognition, weather, YLE news, and conversation summarization are not enabled at startup. Spoken requests use Gemma; the audio workflow requires the optional audio Compose file and speech models.
 - PDF answers require a readable PDF indexed through menu option 9. Question-pair data is imported into the persistent Chroma database the first time `qa` or `qa_test` is selected.
